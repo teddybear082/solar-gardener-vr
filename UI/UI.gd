@@ -11,7 +11,7 @@ enum INFO {
 const DIAGNOSE_ON_WEB := false # set to true if diagnostics should show in web export
 func _ready() -> void:
 	Game.connect("changed_state", self, "changed_state")
-	Game.multitool.connect("switched_to", self, "switched_to_tool")
+	#Game.multitool.connect("switched_to", self, "switched_to_tool")
 	if false: # OS.is_debug_build() or DIAGNOSE_ON_WEB:
 		$Diagnostics.visible = true
 

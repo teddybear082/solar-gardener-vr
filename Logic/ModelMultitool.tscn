@@ -1301,6 +1301,7 @@ rings = 0
 [node name="ModelMultitool" type="Spatial"]
 script = ExtResource( 5 )
 update_slingshot = true
+visibility_slingshot = 1.0
 
 [node name="Base" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0 )

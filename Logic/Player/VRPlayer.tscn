@@ -1,0 +1,110 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_jog_in_place.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_physical_jump.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_jump.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_sprint.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Effects/JetpackFlames.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Logic/Multitool.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Logic/Player/VRPlayer.gd" type="Script" id=12]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_flight.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Logic/PlayerRayCast.tscn" type="PackedScene" id=14]
+[ext_resource path="res://UI/UI.tscn" type="PackedScene" id=15]
+[ext_resource path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" type="PackedScene" id=16]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.585416
+
+[node name="Player" instance=ExtResource( 1 )]
+script = ExtResource( 12 )
+multitoolcontrollerselection = 1
+jetpack_fuel = 1.0
+unlocked_jetpack = false
+gravity_multiplier = 3.0
+left_handed = false
+
+[node name="ARVRCamera" parent="." index="1"]
+far = 1000.0
+
+[node name="VRCommonShaderCache" parent="ARVRCamera" index="0" instance=ExtResource( 10 )]
+
+[node name="Flashlight" type="SpotLight" parent="ARVRCamera" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00718498, -0.138919 )
+light_color = Color( 0.996078, 1, 0.709804, 1 )
+light_energy = 1.5
+spot_range = 11.0478
+spot_angle = 37.9648
+spot_angle_attenuation = 0.297302
+
+[node name="UI_Viewport2Dto3D" parent="ARVRCamera" index="2" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+viewport_size = Vector2( 1980, 1020 )
+scene = ExtResource( 15 )
+
+[node name="MovementDirect" parent="LeftHandController" index="0" instance=ExtResource( 7 )]
+enabled = true
+order = 10
+max_speed = 10.0
+strafe = false
+
+[node name="LeftMultiToolRemoteTransform" type="RemoteTransform" parent="LeftHandController" index="1"]
+
+[node name="MovementJump" parent="LeftHandController" index="2" instance=ExtResource( 5 )]
+jump_button_id = 15
+
+[node name="MovementTurn" parent="RightHandController" index="0" instance=ExtResource( 6 )]
+
+[node name="RemoteTransform" type="RemoteTransform" parent="RightHandController" index="1"]
+
+[node name="PlayerBody" parent="." index="4" instance=ExtResource( 4 )]
+
+[node name="MovementSprint" parent="." index="5" instance=ExtResource( 8 )]
+sprint_type = 1
+
+[node name="MovementPhysicalJump" parent="." index="6" instance=ExtResource( 3 )]
+body_jump_player_only = true
+
+[node name="MovementJogInPlace" parent="." index="7" instance=ExtResource( 2 )]
+fpcontroller_path = NodePath("..")
+
+[node name="MovementFlight" parent="." index="8" instance=ExtResource( 13 )]
+
+[node name="JetpackLight" type="SpotLight" parent="." index="9"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.596073, -2.60552e-08 )
+visible = false
+light_color = Color( 1, 0.909804, 0.435294, 1 )
+light_energy = 0.5
+spot_range = 20.0
+spot_attenuation = 1.86607
+spot_angle = 40.9585
+spot_angle_attenuation = 2.46229
+
+[node name="JetpackFlames" parent="." index="10" instance=ExtResource( 9 )]
+visible = false
+
+[node name="PickupPoint" type="Spatial" parent="." index="11"]
+unique_name_in_owner = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04279, 0 )
+
+[node name="MultitoolHolder" type="Spatial" parent="." index="12"]
+
+[node name="Multitool" parent="MultitoolHolder" index="0" instance=ExtResource( 11 )]
+
+[node name="PlayerRayCast" parent="MultitoolHolder/Multitool" index="7" instance=ExtResource( 14 )]
+
+[node name="BadPlanting" type="Area" parent="." index="13"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="BadPlanting" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54036, 0 )
+shape = SubResource( 1 )
+
+[connection signal="player_jumped" from="PlayerBody" to="." method="_on_PlayerBody_player_jumped"]
+[connection signal="flight_finished" from="MovementFlight" to="." method="_on_MovementFlight_flight_finished"]
+[connection signal="flight_started" from="MovementFlight" to="." method="_on_MovementFlight_flight_started"]

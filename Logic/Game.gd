@@ -24,10 +24,11 @@ var main_scene = null
 # is set when main_scene_running
 var UI: UI = null
 var journal: JournalUI = null
-var player : Player = null
+var player = null
+var vrplayer : VRPlayer = null
 var player_raycast: PlayerRayCast
 var multitool: Multitool
-var camera: PlayerCamera
+var camera#: PlayerCamera
 var crosshair: Crosshair
 var world: Spatial
 var sun: Spatial

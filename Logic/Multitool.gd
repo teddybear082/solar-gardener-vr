@@ -1,6 +1,12 @@
 extends Spatial
 class_name Multitool
 
+export (XRTools.Buttons) var vr_first_action_button = XRTools.Buttons.VR_TRIGGER
+export (XRTools.Buttons) var vr_second_action_button = XRTools.Buttons.VR_GRIP
+export (XRTools.Buttons) var vr_tool1_button : int = XRTools.Buttons.VR_BUTTON_AX
+export (XRTools.Buttons) var vr_tool2_button : int = XRTools.Buttons.VR_BUTTON_BY
+export (XRTools.Buttons) var vr_tool3_button : int = XRTools.Buttons.VR_PAD
+
 enum TOOL {NONE, ANALYSIS, PLANT, GROW, MOVE, BUILD, HOPPER}
 var current_tool :int = TOOL.NONE
 var tool_unlocked = {
@@ -81,6 +87,13 @@ var object_to_move : Spatial
 # Input Variables
 var first_action_holded := false
 var second_action_holded := false
+var vr_first_action_holded : bool = false
+var vr_second_action_holded : bool = false
+var vr_first_action_button_pressed : bool = false
+var vr_second_action_button_pressed : bool = false
+var vr_tool1_button_pressed : bool = false
+var vr_tool2_button_pressed : bool = false
+var vr_tool3_button_pressed : bool = false
 
 # Cooldown
 var waiting_for_animation := false
@@ -101,12 +114,12 @@ func _physics_process(delta):
 			idle_process(delta)
 		else:
 			if hop_mode:
-				if Input.is_action_just_pressed("first_action"):
+				if vr_first_action_button_pressed:
 					Game.execute_planet_hop(hopper_planet, hopper_pos)
 					switch_tool(pre_hopper_tool)
 					hop_mode = false
 		if upgrade_mode:
-			if Input.is_action_just_pressed("first_action"):
+			if vr_first_action_button_pressed:
 				upgrade_station.upgrade()
 				self.upgrade_mode = false
 			
@@ -127,11 +140,11 @@ func set_switched_on_cooldown(set_tool: int):
 		emit_signal("switched_to", set_tool)
 
 func check_input_on_cooldown():
-	if Input.is_action_just_pressed("tool1"):
+	if vr_tool1_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.ANALYSIS
-	if Input.is_action_just_pressed("tool2"):
+	if vr_tool2_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.PLANT
-	if Input.is_action_just_pressed("tool3"):
+	if vr_tool3_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.GROW
 
 func check_input():
@@ -145,12 +158,12 @@ func check_input():
 		switch_tool(TOOL.GROW)
 		emit_signal("switched_to", TOOL.GROW)
 	switched_tool_on_cooldown = TOOL.NONE
-	if Input.is_action_just_pressed("first_action") and not Game.coming_out_of_journal:
+	if vr_first_action_button_pressed and not Game.coming_out_of_journal:
 		process_first_action()
-	first_action_holded = Input.is_action_pressed("first_action") and not Game.coming_out_of_journal
-	if Input.is_action_just_pressed("second_action"):
+	vr_first_action_holded = vr_first_action_button_pressed and not Game.coming_out_of_journal
+	if vr_second_action_button_pressed:
 		process_second_action()
-	second_action_holded = Input.is_action_pressed("second_action")
+	vr_second_action_holded = vr_second_action_button_pressed
 
 	Game.coming_out_of_journal = false
 
@@ -243,7 +256,7 @@ func idle_process(delta: float):
 		TOOL.PLANT:
 			show_plant_information()
 		TOOL.GROW:
-			if first_action_holded and can_grow and $GrowCooldown.time_left == 0.0:
+			if vr_first_action_holded and can_grow and $GrowCooldown.time_left == 0.0:
 				if not grow_beam_active:
 					Audio.fade_in("growbeam", 0.25, true)
 					Audio.fade_in("growbeam_rotate_fast", 0.2)
@@ -263,7 +276,7 @@ func idle_process(delta: float):
 				grow_beam_active = false
 				
 			# Death Beam
-			if second_action_holded and (not grow_beam_active) and has_no_cooldown() and death_beam_unlocked and can_grow:
+			if vr_second_action_holded and (not grow_beam_active) and has_no_cooldown() and death_beam_unlocked and can_grow:
 				if not death_beam_active:
 					Audio.play("remover")
 					death_beam_target = plant_to_grow
@@ -294,13 +307,13 @@ func idle_process(delta: float):
 				#print("Reset Analyse")
 				analyse_completed = false
 			if not currently_analysing:
-				if can_analyse and first_action_holded:
+				if can_analyse and vr_first_action_holded:
 					Audio.fade_in("scanner", 0.20, true)
 					currently_analysing = true
 					current_analyse_object = object_to_analyse
 					current_analyse_progress = 0.0
 			if currently_analysing:
-				if (not first_action_holded) or object_to_analyse != current_analyse_object or (not can_analyse) or currently_switching:
+				if not vr_first_action_holded or object_to_analyse != current_analyse_object or (not can_analyse) or currently_switching:
 					currently_analysing = false
 					Audio.fade_out("scanner", 0.4)
 				else:
@@ -526,7 +539,7 @@ func show_analyse_information():
 		if object_to_analyse != null and is_instance_valid(object_to_analyse):
 			if "analyse_name" in object_to_analyse:
 				if completely_analysed_object != null:
-					if object_to_analyse == completely_analysed_object and (not first_action_holded):
+					if object_to_analyse == completely_analysed_object and not vr_first_action_holded:
 						return
 					else:
 						completely_analysed_object = null
@@ -674,3 +687,28 @@ func update_fake_seed_position():
 
 func set_holo_visible(vis: bool):
 	$ModelMultitool.set_holo_visible(vis)
+
+
+func _on_vr_multitool_controller_button_pressed(button):
+	if button == vr_first_action_button:
+		vr_first_action_button_pressed = true
+	if button == vr_second_action_button:
+		vr_second_action_button_pressed = true
+	if button == vr_tool1_button:
+		vr_tool1_button_pressed = true
+	if button == vr_tool2_button:
+		vr_tool2_button_pressed = true
+	if button == vr_tool3_button:
+		vr_tool3_button_pressed = true
+	
+func _on_vr_multitool_controller_button_released(button):
+	if button == vr_first_action_button:
+		vr_first_action_button_pressed = false
+	if button == vr_second_action_button:
+		vr_second_action_button_pressed = false
+	if button == vr_tool1_button:
+		vr_tool1_button_pressed = false
+	if button == vr_tool2_button:
+		vr_tool2_button_pressed = false
+	if button == vr_tool3_button:
+		vr_tool3_button_pressed = false

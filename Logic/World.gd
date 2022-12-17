@@ -93,7 +93,7 @@ func end_intro_flight():
 	Game.UI.get_node("SkipCutsceneLabel").visible = false
 	Game.set_game_state(Game.State.INGAME)
 
-	Game.player.update_look_direction()
+	#Game.player.update_look_direction()
 	Game.multitool.visible = true
 	yield(get_tree().create_timer(.4),"timeout")
 	Game.multitool.switch_tool(Game.multitool.TOOL.ANALYSIS)

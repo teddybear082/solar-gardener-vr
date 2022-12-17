@@ -134,6 +134,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Objects/UpgradeStation.gd"
 }, {
+"base": "ARVROrigin",
+"class": "VRPlayer",
+"language": "GDScript",
+"path": "res://Logic/Player/VRPlayer.gd"
+}, {
 "base": "Node",
 "class": "XRTools",
 "language": "GDScript",
@@ -310,6 +315,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/movement_grapple.gd"
 }, {
 "base": "XRToolsMovementProvider",
+"class": "XRToolsMovementJogInPlace",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/movement_jog_in_place.gd"
+}, {
+"base": "XRToolsMovementProvider",
 "class": "XRToolsMovementJump",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/movement_jump.gd"
@@ -425,6 +435,7 @@ _global_script_class_icons={
 "Shed": "",
 "UI": "",
 "UpgradeStation": "",
+"VRPlayer": "",
 "XRTools": "",
 "XRToolsClimbable": "res://addons/godot-xr-tools/editor/icons/hand.svg",
 "XRToolsFallDamage": "",
@@ -460,6 +471,7 @@ _global_script_class_icons={
 "XRToolsMovementFlight": "",
 "XRToolsMovementGlide": "",
 "XRToolsMovementGrapple": "",
+"XRToolsMovementJogInPlace": "",
 "XRToolsMovementJump": "",
 "XRToolsMovementPhysicalJump": "",
 "XRToolsMovementProvider": "res://addons/godot-xr-tools/editor/icons/movement_provider.svg",
