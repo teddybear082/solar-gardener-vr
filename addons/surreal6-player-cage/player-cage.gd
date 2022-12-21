@@ -43,20 +43,20 @@ var gravity_direction
 
 onready var floor_max_angle: float = deg2rad(45.0)
 onready var gravity_strength : float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
-onready var planet = $"../planet"
 
-onready var ARVROrigin = $"../ARVROrigin"
-onready var ARVRCamera = $"../ARVROrigin/ARVRCamera"
+
+onready var arvrorigin : ARVROrigin = ARVRHelpers.get_arvr_origin(self)
+onready var arvrcamera : ARVRCamera = ARVRHelpers.get_arvr_camera(self)
 # Controller node
-onready var _right_controller = ARVROrigin.get_node("RightHand")
-onready var _left_controller = ARVROrigin.get_node("LeftHand")
+onready var _right_controller = ARVRHelpers.get_right_controller(arvrorigin)
+onready var _left_controller = ARVRHelpers.get_left_controller(arvrorigin)
 
 ## Button to trigger jump
 export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_TRIGGER
 
-onready var look_direction = -ARVRCamera.transform.basis.z
+onready var look_direction = -arvrcamera.transform.basis.z
 var last_target_up := Vector3.ZERO
-onready var target_look = -ARVRCamera.transform.basis.z
+onready var target_look = -arvrcamera.transform.basis.z
 
 # Collision node
 onready var _collision_node : CollisionShape = $CollisionShape
@@ -88,22 +88,27 @@ func _update_player_radius() -> void:
 		_collision_node.shape.radius = player_radius
 
 func calc_gravity_direction() -> Vector3:
-	if planet != null:
-		var dist_to_planet = global_translation.distance_to(planet.global_translation)
+	if Game.planet != null:
+		var dist_to_planet = global_translation.distance_to(Game.planet.global_translation)
 		if dist_to_planet > gravity_effect_max_dist:
 			return Vector3(0.0, -1.0, 0.0).normalized()
-		return global_translation.direction_to(planet.global_translation)
+		return global_translation.direction_to(Game.planet.global_translation)
 	return Vector3(0.0, -1.0, 0.0).normalized()
 
 func _physics_process(delta) -> void:
-	global_rotation = ARVRCamera.global_rotation
-	if planet != null:
+	if Game.game_state == Game.State.LOADING or Game.game_state == Game.State.INTRO_FLIGHT or Game.game_state == Game.State.WARPING:
+		return 
+	global_rotation = arvrcamera.global_rotation
+	if Game.planet != null:
 		input_axis = Vector2(_right_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_Y_AXIS),
 			_right_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS))
 		input_axis_turn = _left_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS)
 		
 		if _left_controller.is_button_pressed(jump_button_id) or _left_controller.is_button_pressed(jump_button_id):
 			jump_button_pressed = true
+			
+		else:
+			jump_button_pressed = false
 
 		var trigger_jump : bool = is_on_floor() and jump_button_pressed and !has_jumped
 
@@ -118,7 +123,7 @@ func _physics_process(delta) -> void:
 		
 		if trigger_jump:
 			snap = Vector3.ZERO
-			velocity += jump_acceleration * delta * ARVROrigin.transform.basis.y
+			velocity += jump_acceleration * delta * arvrorigin.transform.basis.y
 			has_jumped = true
 			jump_action_released_after_jump = false
 		elif is_on_floor():
@@ -127,7 +132,7 @@ func _physics_process(delta) -> void:
 				jump_button_pressed = false
 			snap = gravity_direction
 		
-		var planet_gravity_modifier : float = planet.gravity_modifier
+		var planet_gravity_modifier : float = Game.planet.gravity_modifier
 		if direction.length() > 0.1 or not is_on_floor():
 			velocity += gravity_strength * gravity_direction * delta * planet_gravity_modifier
 		orient_player_sphere(delta)
@@ -136,9 +141,9 @@ func _physics_process(delta) -> void:
 		velocity = move_and_slide_with_snap(velocity, snap, up_direction, 
 				stop_on_slope, 4, floor_max_angle)
 				
-		ARVROrigin.global_translation = global_translation
-		ARVROrigin.global_rotation = global_rotation
-		ARVRCamera.global_rotation = global_rotation
+		arvrorigin.global_translation = global_translation
+		arvrorigin.global_rotation = global_rotation
+		arvrcamera.global_rotation = global_rotation
 
 #func update_look_direction():
 #	look_direction = -ARVRCamera.transform.basis.z
@@ -146,7 +151,7 @@ func _physics_process(delta) -> void:
 #	last_target_up = Vector3.ZERO
 
 func orient_player_sphere(delta: float):
-	var target_up = planet.global_translation.direction_to(global_translation)
+	var target_up = Game.planet.global_translation.direction_to(global_translation)
 	if last_target_up == Vector3.ZERO:
 		last_target_up = target_up
 	var v = target_up.cross(Vector3.UP).normalized()
@@ -167,9 +172,9 @@ func orient_player_sphere(delta: float):
 	
 	# apply planet rotation to player
 	var test_t := global_transform
-	test_t.origin = planet.to_local(global_translation)
-	test_t = test_t.rotated(planet.rotation_axis, delta * planet.y_rotation_speed)
-	test_t.origin = planet.to_global(test_t.origin)
+	test_t.origin = Game.planet.to_local(global_translation)
+	test_t = test_t.rotated(Game.planet.rotation_axis, delta * Game.planet.y_rotation_speed)
+	test_t.origin = Game.planet.to_global(test_t.origin)
 	global_transform = test_t
 	last_target_up = target_up
 	
