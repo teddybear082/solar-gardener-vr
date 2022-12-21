@@ -3,9 +3,10 @@ class_name Multitool
 
 export (XRTools.Buttons) var vr_first_action_button = XRTools.Buttons.VR_TRIGGER
 export (XRTools.Buttons) var vr_second_action_button = XRTools.Buttons.VR_GRIP
-export (XRTools.Buttons) var vr_tool1_button : int = XRTools.Buttons.VR_BUTTON_AX
-export (XRTools.Buttons) var vr_tool2_button : int = XRTools.Buttons.VR_BUTTON_BY
-export (XRTools.Buttons) var vr_tool3_button : int = XRTools.Buttons.VR_PAD
+export (XRTools.Buttons) var vr_show_hand_tool_select_ui = XRTools.Buttons.VR_BUTTON_AX
+#export (XRTools.Buttons) var vr_tool1_button : int = XRTools.Buttons.VR_BUTTON_AX
+#export (XRTools.Buttons) var vr_tool2_button : int = XRTools.Buttons.VR_BUTTON_BY
+#export (XRTools.Buttons) var vr_tool3_button : int = XRTools.Buttons.VR_PAD
 
 enum TOOL {NONE, ANALYSIS, PLANT, GROW, MOVE, BUILD, HOPPER}
 var current_tool :int = TOOL.NONE
@@ -699,21 +700,43 @@ func _on_vr_multitool_controller_button_pressed(button):
 		vr_first_action_button_pressed = true
 	if button == vr_second_action_button:
 		vr_second_action_button_pressed = true
-	if button == vr_tool1_button:
-		vr_tool1_button_pressed = true
-	if button == vr_tool2_button:
-		vr_tool2_button_pressed = true
-	if button == vr_tool3_button:
-		vr_tool3_button_pressed = true
+	if button == vr_show_hand_tool_select_ui:
+		get_node("HandToolViewport").visible = !get_node("HandToolViewport").visible
+
+#	if button == vr_tool1_button:
+#		vr_tool1_button_pressed = true
+#	if button == vr_tool2_button:
+#		vr_tool2_button_pressed = true
+#	if button == vr_tool3_button:
+#		vr_tool3_button_pressed = true
 	
 func _on_vr_multitool_controller_button_released(button):
 	if button == vr_first_action_button:
 		vr_first_action_button_pressed = false
 	if button == vr_second_action_button:
 		vr_second_action_button_pressed = false
-	if button == vr_tool1_button:
-		vr_tool1_button_pressed = false
-	if button == vr_tool2_button:
-		vr_tool2_button_pressed = false
-	if button == vr_tool3_button:
-		vr_tool3_button_pressed = false
+#	if button == vr_tool1_button:
+#		vr_tool1_button_pressed = false
+#	if button == vr_tool2_button:
+#		vr_tool2_button_pressed = false
+#	if button == vr_tool3_button:
+#		vr_tool3_button_pressed = false
+
+
+func _on_analyzer_handUI_button_pressed():
+	vr_tool2_button_pressed = false
+	vr_tool3_button_pressed = false
+	vr_tool1_button_pressed = true
+	
+	
+func _on_plant_handUI_button_pressed():
+	vr_tool3_button_pressed = false
+	vr_tool1_button_pressed = false
+	vr_tool2_button_pressed = true
+	
+
+func _on_grow_handUI_button_pressed():
+	vr_tool1_button_pressed = false
+	vr_tool2_button_pressed = false
+	vr_tool3_button_pressed = true
+	

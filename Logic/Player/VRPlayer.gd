@@ -22,6 +22,8 @@ onready var jetpack_flames = get_node("JetpackFlames")
 onready var jetpack_particles = jetpack_flames.get_node("Particles")
 onready var player_body = get_node("Player-cage")
 onready var pickup_point : Spatial = $"%PickupPoint"
+onready var tool_select_ui = $MultitoolHolder/Multitool/HandToolViewport.get_scene_instance()
+
 
 var movement_disabled : bool = false
 var gravity_effect_max_dist = 40
@@ -41,18 +43,33 @@ func _ready():
 	
 	if multitoolcontrollerselection == MultiToolController.RIGHT:
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		$RightHandController/RightPhysicsHand.visible = false
+		$LeftHandController/LeftPhysicsHand.visible = true
+		$LeftHandController/LeftPhysicsHand/Hand_Nails_L/Armature/Skeleton/BoneIndexDistal/Poke.enabled = true
+		$RightHandController/RightPhysicsHand/Hand_Nails_R/Armature/Skeleton/BoneIndexDistal/Poke.enabled = false
 		_multitoolcontroller = ARVRHelpers.get_right_controller(self)
 		_off_handcontroller = ARVRHelpers.get_left_controller(self)
 	else:
 		$LeftHandController/LeftMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		$LeftHandController/LeftPhysicsHand.visible = false
+		$RightHandController/RightPhysicsHand.visible = true
+		$LeftHandController/LeftPhysicsHand/Hand_Nails_L/Armature/Skeleton/BoneIndexDistal/Poke.enabled = false
+		$RightHandController/RightPhysicsHand/Hand_Nails_R/Armature/Skeleton/BoneIndexDistal/Poke.enabled = true
 		_multitoolcontroller = ARVRHelpers.get_left_controller(self)
 		_off_handcontroller = ARVRHelpers.get_right_controller(self)
 	
 	_multitoolcontroller.connect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
 	_multitoolcontroller.connect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
+	
 	_off_handcontroller.connect("button_pressed", Game, "_on_offhand_controller_button_pressed")
 	_off_handcontroller.connect("button_release", Game, "_on_offhand_controller_button_released")
+	
 	Game.multitool.connect("switched_to", Game.UI, "switched_to_tool")
+	
+	tool_select_ui.connect("analyzer_button_pressed", Game.multitool, "_on_analyzer_handUI_button_pressed")
+	tool_select_ui.connect("plant_button_pressed", Game.multitool, "_on_plant_handUI_button_pressed")
+	tool_select_ui.connect("grow_button_pressed", Game.multitool, "_on_grow_handUI_button_pressed")
+
 	player_body.set_as_toplevel(true)
 	
 func _process(delta):
@@ -112,11 +129,19 @@ func set_multitool_controller(string_of_controller_side : String):
 	
 	if string_of_controller_side == "left":
 		$LeftHandController/LeftMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		$LeftHandController/LeftPhysicsHand.visible = false
+		$RightHandController/RightPhysicsHand.visible = true
+		$LeftHandController/LeftPhysicsHand/Hand_Nails_L/Armature/Skeleton/BoneIndexDistal/Poke.enabled = true
+		$RightHandController/RightPhysicsHand/Hand_Nails_R/Armature/Skeleton/BoneIndexDistal/Poke.enabled = false
 		_multitoolcontroller = ARVRHelpers.get_left_controller(self)
 		_off_handcontroller = ARVRHelpers.get_right_controller(self)
 		
 	if string_of_controller_side == "right":
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		$RightHandController/RightPhysicsHand.visible = false
+		$LeftHandController/LeftPhysicsHand.visible = true
+		$LeftHandController/LeftPhysicsHand/Hand_Nails_L/Armature/Skeleton/BoneIndexDistal/Poke.enabled = false
+		$RightHandController/RightPhysicsHand/Hand_Nails_R/Armature/Skeleton/BoneIndexDistal/Poke.enabled = true
 		_multitoolcontroller = ARVRHelpers.get_right_controller(self)
 		_off_handcontroller = ARVRHelpers.get_left_controller(self)
 	
