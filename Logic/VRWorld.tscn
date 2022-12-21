@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://game_environment.tres" type="Environment" id=1]
 [ext_resource path="res://Logic/World.gd" type="Script" id=2]
@@ -65,9 +65,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector3( 0, 450, 0 ), Vector3( 0, 360, 0 ), Vector3( 0, 324.799, 0 ), Vector3( 0, 223.039, 0 ), Vector3( 0, 205.346, 0 ), Vector3( 0, 175.346, 0 ) ]
 }
-
-[sub_resource type="BoxShape" id=12]
-extents = Vector3( 1, 0.1, 1 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
@@ -190,11 +187,5 @@ far = 1000.0
 [node name="Position5" type="Camera" parent="NewCutscene"]
 transform = Transform( -0.996703, 0, 0.0811382, 0, 1, 0, -0.0811382, 0, -0.996703, -48.796, 8.907, -97.7 )
 far = 1000.0
-
-[node name="player_platform" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="player_platform"]
-shape = SubResource( 12 )
 
 [connection signal="timeout" from="SkipCutscene" to="." method="_on_SkipCutscene_timeout"]

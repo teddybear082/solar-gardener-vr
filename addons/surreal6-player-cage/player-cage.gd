@@ -52,7 +52,7 @@ onready var _right_controller = ARVRHelpers.get_right_controller(arvrorigin)
 onready var _left_controller = ARVRHelpers.get_left_controller(arvrorigin)
 
 ## Button to trigger jump
-export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_TRIGGER
+export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_BUTTON_AX
 
 onready var look_direction = -arvrcamera.transform.basis.z
 var last_target_up := Vector3.ZERO

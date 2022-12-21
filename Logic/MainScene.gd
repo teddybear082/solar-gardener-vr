@@ -31,9 +31,6 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	set_process_input(false)
-#	var flat_screen_world = $ViewportContainer/Viewport/World
-#	$ViewportContainer/Viewport.remove_child(flat_screen_world)
-#	flat_screen_world.queue_free()
 	Game.main_scene_running = true
 	Game.main_scene = self
 	#Game.UI = $ViewportContainer/Viewport/VRWorld/Player/ARVRCamera/UI_Viewport2Dto3D.get_scene_instance()#$UI

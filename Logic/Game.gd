@@ -55,6 +55,10 @@ var number_of_ambers := 0 setget set_number_of_ambers
 var number_of_logs := 0 setget set_number_of_logs
 var number_of_max_lv := 0 setget set_number_of_max_lv
 
+# vr settings and journal buttons
+var vr_settings_button = XRTools.Buttons.VR_PAD
+var vr_journal_button = XRTools.Buttons.VR_BUTTON_BY
+
 # move down
 func set_number_of_ambers(number):
 	number_of_ambers = number
@@ -283,3 +287,22 @@ func credits_skipped():
 	
 func _on_SettingsOpenCooldown_timeout() -> void:
 	pass # one shot
+
+func _on_offhand_controller_button_pressed(button):
+	if button == vr_settings_button and not OS.has_feature("HTML5"):  # show/hide settings UI
+		if main_scene_running:
+			if game_state == State.INGAME:
+				$SettingsOpenCooldown.start(1.4)
+				self.game_state = State.SETTINGS
+			elif game_state == State.SETTINGS:
+				# this is only the correct if you can only enter settings from ingame!!
+				self.game_state = State.INGAME
+	if button == vr_journal_button:
+		$SettingsOpenCooldown.start(1.4)
+		if game_state == State.INGAME:
+			self.game_state = State.JOURNAL
+		elif game_state == State.JOURNAL:
+			self.game_state = State.INGAME
+
+func _on_offhand_controller_button_released(button):
+	pass

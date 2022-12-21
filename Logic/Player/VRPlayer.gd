@@ -29,6 +29,7 @@ var gravity_direction = 0.0
 var trigger_jetpack : bool = false
 const footstep_thresh = 0.2
 var _multitoolcontroller : ARVRController
+var _off_handcontroller : ARVRController
 
 func _ready():
 	Game.vrplayer = self
@@ -40,13 +41,16 @@ func _ready():
 	if multitoolcontrollerselection == MultiToolController.RIGHT:
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
 		_multitoolcontroller = ARVRHelpers.get_right_controller(self)
+		_off_handcontroller = ARVRHelpers.get_left_controller(self)
 	else:
 		$LeftHandController/LeftMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
 		_multitoolcontroller = ARVRHelpers.get_left_controller(self)
+		_off_handcontroller = ARVRHelpers.get_right_controller(self)
 	
 	_multitoolcontroller.connect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
 	_multitoolcontroller.connect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
-
+	_off_handcontroller.connect("button_pressed", Game, "_on_offhand_controller_button_pressed")
+	_off_handcontroller.connect("button_release", Game, "_on_offhand_controller_button_released")
 	Game.multitool.connect("switched_to", Game.UI, "switched_to_tool")
 	player_body.set_as_toplevel(true)
 	
@@ -57,12 +61,12 @@ func _physics_process(delta) -> void:
 	if Game.game_state == Game.State.LOADING or Game.game_state == Game.State.INTRO_FLIGHT or Game.game_state == Game.State.WARPING:
 		return 
 	
-		# If movement disabled variable set, disable movement in player_cage
-	#if movement_disabled or Game.game_state != Game.State.INGAME:
-	#	player_body.movement_disabled = true
+	# If movement disabled variable set, disable movement in player_cage
+	if movement_disabled or Game.game_state != Game.State.INGAME:
+		player_body.movement_disabled = true
 	
-	#else:
-	#	player_body.movement_disabled = false
+	else:
+		player_body.movement_disabled = false
 	
 	# Enable flight movement provider if have unlocked jet pack and have fuel, else disable
 	var jetpack_available = unlocked_jetpack and (jetpack_fuel>0.0)
@@ -72,7 +76,6 @@ func _physics_process(delta) -> void:
 		pass # to do
 	
 	if trigger_jetpack:
-#		print(jetpack_fuel)
 		jetpack_fuel -= delta * .7
 		
 	if !trigger_jetpack:
@@ -83,28 +86,6 @@ func _physics_process(delta) -> void:
 			else:
 				Audio.stop_footsteps()
 				
-#	var planet_gravity_modifier : float = Game.planet.gravity_modifier
-#	if direction.length() > 0.1 or not is_on_floor():
-#		velocity += gravity_strength * gravity_direction * delta * planet_gravity_modifier
-#	orient_player_sphere(delta)
-#	velocity = accelerate(velocity, direction, delta)
-##	
-#	up_direction = -gravity_direction
-#	velocity = move_and_slide_with_snap(velocity, snap, up_direction, 
-#			stop_on_slope, 4, floor_max_angle)
-			
-	
-#
-#func calc_gravity_direction() -> Vector3:
-#	if Game.planet != null:
-#		var dist_to_planet = global_translation.distance_to(Game.planet.global_translation)
-#		if dist_to_planet > gravity_effect_max_dist:
-#			return Vector3(0.0, -1.0, 0.0).normalized()
-#		return global_translation.direction_to(Game.planet.global_translation)
-#
-#	return Vector3(0.0, -1.0, 0.0).normalized()
-#
-
 
 
 func _on_MovementFlight_flight_started():
