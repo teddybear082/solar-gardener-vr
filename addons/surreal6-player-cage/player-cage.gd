@@ -54,6 +54,12 @@ onready var _left_controller = ARVRHelpers.get_left_controller(arvrorigin)
 ## Button to trigger jump
 export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_BUTTON_AX
 
+## Variables used to store movement and turn controllers
+onready var _direct_movement_controller : ARVRController = _right_controller
+onready var _turn_controller : ARVRController = _left_controller
+onready var _jump_controller : ARVRController = _left_controller
+onready var _jetpack_controller : ARVRController = _left_controller
+
 onready var look_direction = -arvrcamera.transform.basis.z
 var last_target_up := Vector3.ZERO
 onready var target_look = -arvrcamera.transform.basis.z
@@ -100,11 +106,11 @@ func _physics_process(delta) -> void:
 		return 
 	global_rotation = arvrcamera.global_rotation
 	if Game.planet != null:
-		input_axis = Vector2(_right_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_Y_AXIS),
-			_right_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS))
-		input_axis_turn = _left_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS)
+		input_axis = Vector2(_direct_movement_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_Y_AXIS),
+			_direct_movement_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS))
+		input_axis_turn = _turn_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS)
 		
-		if _left_controller.is_button_pressed(jump_button_id) or _left_controller.is_button_pressed(jump_button_id):
+		if _jump_controller.is_button_pressed(jump_button_id) or _jump_controller.is_button_pressed(jump_button_id):
 			jump_button_pressed = true
 			
 		else:
@@ -197,3 +203,29 @@ func accelerate(old_velocity: Vector3, direction: Vector3, delta: float) -> Vect
 func get_in_plane_velocity() -> Vector2:
 	var global_vel: Vector3 = velocity
 	return Vector2(global_vel.x, global_vel.z)
+	
+	
+func set_direct_movement_controller(string_of_controller_side : String):
+	if string_of_controller_side == "left":
+		_direct_movement_controller = _left_controller
+		_turn_controller = _right_controller
+		
+	if string_of_controller_side == "right":
+		_direct_movement_controller = _right_controller
+		_turn_controller = _left_controller
+		
+		
+func set_jumping_controller(string_of_controller_side : String):
+	if string_of_controller_side == "left":
+		_jump_controller = _left_controller
+		
+	if string_of_controller_side == "right":
+		_jump_controller = _right_controller
+	
+	
+func set_jetpack_controller(string_of_controller_side : String):
+	if string_of_controller_side == "left":
+		_jetpack_controller = _left_controller
+		
+	if string_of_controller_side == "right":
+		_jetpack_controller = _right_controller

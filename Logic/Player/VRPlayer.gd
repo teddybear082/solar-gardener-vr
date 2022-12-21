@@ -38,6 +38,7 @@ func _ready():
 	Game.multitool = $MultitoolHolder/Multitool
 	Game.player_raycast = $MultitoolHolder/Multitool/PlayerRayCast
 	Game.UI = Game.camera.get_node("UI_Viewport2Dto3D").get_scene_instance()
+	
 	if multitoolcontrollerselection == MultiToolController.RIGHT:
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
 		_multitoolcontroller = ARVRHelpers.get_right_controller(self)
@@ -103,3 +104,24 @@ func _on_MovementFlight_flight_finished():
 	jetpack_particles.emitting = false
 	jetpack_fuel = 1.0
 
+func set_multitool_controller(string_of_controller_side : String):
+	_multitoolcontroller.disconnect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
+	_multitoolcontroller.disconnect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
+	_off_handcontroller.disconnect("button_pressed", Game, "_on_offhand_controller_button_pressed")
+	_off_handcontroller.disconnect("button_release", Game, "_on_offhand_controller_button_released")
+	
+	if string_of_controller_side == "left":
+		$LeftHandController/LeftMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		_multitoolcontroller = ARVRHelpers.get_left_controller(self)
+		_off_handcontroller = ARVRHelpers.get_right_controller(self)
+		
+	if string_of_controller_side == "right":
+		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
+		_multitoolcontroller = ARVRHelpers.get_right_controller(self)
+		_off_handcontroller = ARVRHelpers.get_left_controller(self)
+	
+	_multitoolcontroller.connect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
+	_multitoolcontroller.connect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
+	_off_handcontroller.connect("button_pressed", Game, "_on_offhand_controller_button_pressed")
+	_off_handcontroller.connect("button_release", Game, "_on_offhand_controller_button_released")
+	

@@ -163,4 +163,4 @@ func try_grabroot_effect(pos: Vector3):
 			if has_node("GrabrootGrabber"):
 				var grabber : Spatial = get_node("GrabrootGrabber")
 				grabber.emerge(pos)
-				Game.camera.screen_shake()
+				#Game.camera.screen_shake()

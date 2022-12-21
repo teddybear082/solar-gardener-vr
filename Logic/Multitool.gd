@@ -688,6 +688,11 @@ func update_fake_seed_position():
 func set_holo_visible(vis: bool):
 	$ModelMultitool.set_holo_visible(vis)
 
+func set_vr_first_action_button(xrtoolsbutton):
+	vr_first_action_button = xrtoolsbutton
+	
+func set_vr_second_action_button(xrtoolsbutton):
+	vr_second_action_button = xrtoolsbutton
 
 func _on_vr_multitool_controller_button_pressed(button):
 	if button == vr_first_action_button:

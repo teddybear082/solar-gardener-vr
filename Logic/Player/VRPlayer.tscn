@@ -38,13 +38,17 @@ spot_angle_attenuation = 0.297302
 [node name="UI_Viewport2Dto3D" parent="ARVRCamera" index="2" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
 viewport_size = Vector2( 1980, 1020 )
+unshaded = true
 scene = ExtResource( 15 )
 update_mode = 2
+collision_layer = 524288
 
 [node name="LeftMultiToolRemoteTransform" type="RemoteTransform" parent="LeftHandController" index="0"]
 
 [node name="FunctionPointer" parent="LeftHandController" index="1" instance=ExtResource( 2 )]
 laser_length = 1
+collision_mask = 524288
+collide_with_areas = true
 
 [node name="RightMultiToolRemoteTransform" type="RemoteTransform" parent="RightHandController" index="0"]
 
