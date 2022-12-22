@@ -10,10 +10,9 @@ enum MultiToolController {
 
 export (MultiToolController) var multitoolcontrollerselection : int = MultiToolController.RIGHT
 
-export var jetpack_fuel := 1.0
+
 export var unlocked_jetpack := false
-export var gravity_multiplier := 3.0
-export var left_handed : bool = false
+
 
 onready var player_body = get_node("Player-cage")
 onready var pickup_point : Spatial = $"%PickupPoint"

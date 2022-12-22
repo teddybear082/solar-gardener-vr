@@ -143,11 +143,14 @@ func set_switched_on_cooldown(set_tool: int):
 func check_input_on_cooldown():
 	if vr_tool1_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.ANALYSIS
+		vr_tool1_button_pressed = false
 	if vr_tool2_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.PLANT
+		vr_tool2_button_pressed = false
 	if vr_tool3_button_pressed:
 		self.switched_tool_on_cooldown = TOOL.GROW
-
+		vr_tool3_button_pressed = false
+		
 func check_input():
 	if switched_tool_on_cooldown == TOOL.ANALYSIS:
 		switch_tool(TOOL.ANALYSIS)
@@ -704,25 +707,14 @@ func _on_vr_multitool_controller_button_pressed(button):
 		vr_second_action_button_pressed = true
 	if button == vr_show_hand_tool_select_ui:
 		get_node("HandToolViewport").visible = !get_node("HandToolViewport").visible
-
-#	if button == vr_tool1_button:
-#		vr_tool1_button_pressed = true
-#	if button == vr_tool2_button:
-#		vr_tool2_button_pressed = true
-#	if button == vr_tool3_button:
-#		vr_tool3_button_pressed = true
+		get_node("HandToolViewport").enabled = !get_node("HandToolViewport").enabled
+	
 	
 func _on_vr_multitool_controller_button_released(button):
 	if button == vr_first_action_button:
 		vr_first_action_button_pressed = false
 	if button == vr_second_action_button:
 		vr_second_action_button_pressed = false
-#	if button == vr_tool1_button:
-#		vr_tool1_button_pressed = false
-#	if button == vr_tool2_button:
-#		vr_tool2_button_pressed = false
-#	if button == vr_tool3_button:
-#		vr_tool3_button_pressed = false
 
 
 func _on_analyzer_handUI_button_pressed():

@@ -21,15 +21,16 @@ export (float, 0.0, 1.0) var eye_forward_offset : float = 0.66
 export var speed := 30
 export var gravity_multiplier := 3.0
 export var jump_acceleration := 950
-export var jetpack_fuel := 1.0
+export var max_jetpack_fuel := 3.0
 export var unlocked_jetpack := false
 export var ground_friction := 0.1
 export var air_friction := 0.05
+export var turn_sensitivity : float = .015 #0.005
 
 var direction := Vector3()
 var input_axis := Vector2.ZERO
 var input_axis_turn := 0.0
-var turn_sensitivity = 0.005
+
 var velocity := Vector3()
 var snap := Vector3()
 var up_direction := Vector3.UP
@@ -42,6 +43,8 @@ var jump_action_released_after_jump := false
 
 var gravity_effect_max_dist = 40
 var gravity_direction
+
+onready var jetpack_fuel = max_jetpack_fuel
 
 onready var floor_max_angle: float = deg2rad(45.0)
 onready var gravity_strength : float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
@@ -57,8 +60,8 @@ onready var _left_controller = ARVRHelpers.get_left_controller(arvrorigin)
 export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_BUTTON_AX
 
 ## Variables used to store movement and turn controllers
-onready var _direct_movement_controller : ARVRController = _right_controller
-onready var _turn_controller : ARVRController = _left_controller
+onready var _direct_movement_controller : ARVRController = _left_controller #_right_controller
+onready var _turn_controller : ARVRController = _right_controller #_left_controller
 onready var _jump_controller : ARVRController = _left_controller
 
 
@@ -155,7 +158,7 @@ func _physics_process(delta) -> void:
 		elif is_on_floor():
 			if has_jumped:
 				has_jumped = false
-				jetpack_fuel = 1.0
+				jetpack_fuel = max_jetpack_fuel
 			snap = gravity_direction
 		
 		var planet_gravity_modifier : float = Game.planet.gravity_modifier
