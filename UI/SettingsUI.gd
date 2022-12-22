@@ -48,8 +48,8 @@ func _on_Metadata_focus_entered() -> void:
 		$"%Metadata".text = ""
 
 func _on_SensitivitySlider_value_changed(value: float) -> void:
-	Game.player.mouse_sensitivity = (Game.player.min_sensitivity + value * (Game.player.max_sensitivity - Game.player.min_sensitivity))
-
+#	Game.player.mouse_sensitivity = (Game.player.min_sensitivity + value * (Game.player.max_sensitivity - Game.player.min_sensitivity))
+	pass
 
 
 func hide_settings():
@@ -72,8 +72,8 @@ func _on_SFXSlider_value_changed(value: float) -> void:
 
 
 func _on_InvertYButton_pressed() -> void:
-	Game.player.y_axis_factor = -Game.player.y_axis_factor
-
+	#Game.player.y_axis_factor = -Game.player.y_axis_factor
+	pass
 
 func _on_GraphicsSlider_value_changed(value: float) -> void:
 	value = lerp(.3, 1.0, value)

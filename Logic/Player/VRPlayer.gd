@@ -9,22 +9,16 @@ enum MultiToolController {
 }
 
 export (MultiToolController) var multitoolcontrollerselection : int = MultiToolController.RIGHT
-#export (XRTools.Buttons) var vr_show_hand_tool_select_ui = XRTools.Buttons.VR_BUTTON_AX
 
 export var jetpack_fuel := 1.0
 export var unlocked_jetpack := false
 export var gravity_multiplier := 3.0
 export var left_handed : bool = false
 
-
-#onready var jetpack_light = get_node("JetpackLight")
-#onready var jetpack_flames = get_node("JetpackFlames")
-#onready var jetpack_particles = jetpack_flames.get_node("Particles")
 onready var player_body = get_node("Player-cage")
 onready var pickup_point : Spatial = $"%PickupPoint"
 onready var hand_tool_viewport = $MultitoolHolder/Multitool/HandToolViewport
 onready var tool_select_ui = hand_tool_viewport.get_scene_instance()
-
 
 var movement_disabled : bool = false
 var gravity_effect_max_dist = 40
@@ -62,13 +56,10 @@ func _ready():
 		_multitoolcontroller = ARVRHelpers.get_left_controller(self)
 		_off_handcontroller = ARVRHelpers.get_right_controller(self)
 	
-	_multitoolcontroller.get_node("FunctionPointer").enabled = false
-	_off_handcontroller.get_node("FunctionPointer").enabled = true
-	function_pointer = _off_handcontroller.get_node("FunctionPointer")
-		
+	
 	_multitoolcontroller.connect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
 	_multitoolcontroller.connect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
-	#_multitoolcontroller.connect("button_pressed", self, "_on_vr_multitool_controller_button_pressed")
+	
 	
 	_off_handcontroller.connect("button_pressed", Game, "_on_offhand_controller_button_pressed")
 	_off_handcontroller.connect("button_release", Game, "_on_offhand_controller_button_released")
@@ -91,59 +82,16 @@ func _physics_process(delta) -> void:
 	# If movement disabled variable set, disable movement in player_cage
 	if movement_disabled or Game.game_state != Game.State.INGAME:
 		player_body.movement_disabled = true
-	
 	else:
 		player_body.movement_disabled = false
 	
-	# If hand UI visible, disable pointer
-	function_pointer.enabled = !hand_tool_viewport.visible
-	
+	# If unlocked jetpack, let player-cage know to impact movement
 	if unlocked_jetpack:
 		player_body.unlocked_jetpack = true
-	
 	else:
 		player_body.unlocked_jetpack = false
-	# Enable flight movement provider if have unlocked jet pack and have fuel, else disable
-#	var jetpack_available = unlocked_jetpack and (jetpack_fuel>0.0)
-#	if jetpack_available == true:
-#		pass # to do 
-#	else:
-#		pass # to do
-#
-#	if trigger_jetpack:
-#		jetpack_fuel -= delta * .7
-#
-#	if !trigger_jetpack:
-#			if player_body.input_axis.length() > footstep_thresh:
-#				var prefix: String = Game.planet.music_prefix		
-#				Audio.play_random_step(prefix)
-#				Audio.start_footsteps(prefix)
-#			else:
-#				Audio.stop_footsteps()
-#
-
-#
-#func _on_MovementFlight_flight_started():
-#	Audio.fade_in("jetpack", 0.1, true)
-#	trigger_jetpack = true
-#	jetpack_light.visible = true
-#	jetpack_flames.visible = true
-#	jetpack_particles.emitting = true
-#
-#func _on_MovementFlight_flight_finished():
-#	Audio.fade_out("jetpack", 0.1)
-#	trigger_jetpack = false
-#	jetpack_light.visible = false
-#	jetpack_flames.visible = false
-#	jetpack_particles.emitting = false
-#	jetpack_fuel = 1.0
-
-#
-#func _on_vr_multitool_controller_button_pressed(button):
-#	if button == vr_show_hand_tool_select_ui:
-#		hand_tool_viewport.visible = !hand_tool_viewport.visible
-#		hand_tool_viewport.enabled = !hand_tool_viewport.enabled
-
+	
+	
 func set_multitool_controller(string_of_controller_side : String):
 	_multitoolcontroller.disconnect("button_pressed", Game.multitool, "_on_vr_multitool_controller_button_pressed")
 	_multitoolcontroller.disconnect("button_release", Game.multitool, "_on_vr_multitool_controller_button_released")
@@ -174,5 +122,3 @@ func set_multitool_controller(string_of_controller_side : String):
 	_off_handcontroller.connect("button_pressed", Game, "_on_offhand_controller_button_pressed")
 	_off_handcontroller.connect("button_release", Game, "_on_offhand_controller_button_released")
 	
-	_multitoolcontroller.get_node("FunctionPointer").enabled = false
-	_off_handcontroller.get_node("FunctionPointer").enabled = true

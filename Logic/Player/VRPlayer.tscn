@@ -1,7 +1,6 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/godot-xr-tools/functions/function_pointer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Materials/alienhandmaterial.tres" type="Material" id=3]
 [ext_resource path="res://addons/godot-xr-tools/player/poke/poke.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" type="PackedScene" id=5]
@@ -45,7 +44,7 @@ nodes/OpenHand/node = SubResource( 5 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 6 )
 nodes/Trigger/position = Vector2( -360, 20 )
-node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
+node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Grip"
@@ -76,7 +75,7 @@ nodes/OpenHand/node = SubResource( 11 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 12 )
 nodes/Trigger/position = Vector2( -360, 40 )
-node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
+node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.585416
@@ -107,12 +106,7 @@ visible = true
 
 [node name="LeftMultiToolRemoteTransform" type="RemoteTransform" parent="LeftHandController" index="0"]
 
-[node name="FunctionPointer" parent="LeftHandController" index="1" instance=ExtResource( 2 )]
-laser_length = 1
-collision_mask = 688128
-collide_with_areas = true
-
-[node name="LeftHand" parent="LeftHandController" index="2" instance=ExtResource( 5 )]
+[node name="LeftHand" parent="LeftHandController" index="1" instance=ExtResource( 5 )]
 hand_material_override = ExtResource( 3 )
 
 [node name="Skeleton" parent="LeftHandController/LeftHand/Hand_L/Armature" index="0"]
@@ -132,22 +126,18 @@ enabled = false
 [node name="AnimationTree" parent="LeftHandController/LeftHand" index="1"]
 tree_root = SubResource( 7 )
 
-[node name="UI_Viewport2Dto3D" parent="LeftHandController" index="3" instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158014, 0.0248129, 0.182766 )
+[node name="UI_Viewport2Dto3D" parent="LeftHandController" index="2" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158014, 0.091311, 0.192568 )
 screen_size = Vector2( 0.4, 0.3 )
 viewport_size = Vector2( 1980, 1020 )
 unshaded = true
 scene = ExtResource( 15 )
+update_mode = 2
 collision_layer = 655360
 
 [node name="RightMultiToolRemoteTransform" type="RemoteTransform" parent="RightHandController" index="0"]
 
-[node name="FunctionPointer" parent="RightHandController" index="1" instance=ExtResource( 2 )]
-enabled = false
-collision_mask = 950272
-collide_with_areas = true
-
-[node name="RightHand" parent="RightHandController" index="2" instance=ExtResource( 6 )]
+[node name="RightHand" parent="RightHandController" index="1" instance=ExtResource( 6 )]
 hand_material_override = ExtResource( 3 )
 
 [node name="Skeleton" parent="RightHandController/RightHand/Hand_R/Armature" index="0"]
@@ -193,15 +183,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04279, 0 )
 [node name="Multitool" parent="MultitoolHolder" index="0" instance=ExtResource( 11 )]
 
 [node name="PlayerRayCast" parent="MultitoolHolder/Multitool" index="7" instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 0.926114, -0.377243, 0, 0.377243, 0.926114, 0, 0.0791102, -0.178372 )
+transform = Transform( 1, 0, 0, 0, 0.926114, -0.377243, 0, 0.377243, 0.926114, 0, 0.122811, -0.289513 )
 cast_to = Vector3( 0, 0, -1 )
 
 [node name="HandToolViewport" parent="MultitoolHolder/Multitool" index="8" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0.2 )
+update_mode = 2
 collision_layer = 688128
 
 [node name="Poke" parent="MultitoolHolder/Multitool" index="9" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0858724, -0.161108 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737845, -0.155635 )
+radius = 0.01
 
 [node name="BadPlanting" type="Area" parent="." index="7"]
 collision_layer = 8

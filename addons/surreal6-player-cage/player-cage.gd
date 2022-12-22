@@ -60,7 +60,7 @@ export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_BUTTON_AX
 onready var _direct_movement_controller : ARVRController = _right_controller
 onready var _turn_controller : ARVRController = _left_controller
 onready var _jump_controller : ARVRController = _left_controller
-#onready var _jetpack_controller : ARVRController = _left_controller
+
 
 onready var look_direction = -arvrcamera.transform.basis.z
 var last_target_up := Vector3.ZERO
@@ -140,11 +140,11 @@ func _physics_process(delta) -> void:
 		gravity_direction = calc_gravity_direction()
 		
 		if trigger_jetpack:
-#			print(jetpack_fuel)
 			velocity += jump_acceleration * delta * transform.basis.y * 0.04
 			jetpack_fuel -= delta * .7
 		
 		$JetpackLight.visible = trigger_jetpack
+		$JetpackFlames.visible = trigger_jetpack
 		$JetpackFlames/Particles.emitting = trigger_jetpack
 		
 		if trigger_jump:
@@ -155,7 +155,6 @@ func _physics_process(delta) -> void:
 		elif is_on_floor():
 			if has_jumped:
 				has_jumped = false
-				#jump_button_pressed = false
 				jetpack_fuel = 1.0
 			snap = gravity_direction
 		
@@ -225,7 +224,6 @@ func orient_player_sphere(delta: float):
 	look_direction = -transform.basis.z
 
 func get_input_direction() -> Vector3:
-#	direction = transform.basis.z * -input_axis.x + transform.basis.x * input_axis.y
 	direction = transform.basis.z * -input_axis.x + transform.basis.x * input_axis.y
 	return direction
 
@@ -260,13 +258,6 @@ func set_jumping_controller(string_of_controller_side : String):
 	if string_of_controller_side == "right":
 		_jump_controller = _right_controller
 	
-	
-#func set_jetpack_controller(string_of_controller_side : String):
-#	if string_of_controller_side == "left":
-#		_jetpack_controller = _left_controller
-#
-#	if string_of_controller_side == "right":
-#		_jetpack_controller = _right_controller
 
 func _on_jump_controller_button_released(button):
 	if button == jump_button_id:
