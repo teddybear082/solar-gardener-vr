@@ -41,7 +41,7 @@ func _ready():
 	Game.camera = get_node("ARVRCamera")
 	Game.multitool = $MultitoolHolder/Multitool
 	Game.player_raycast = $MultitoolHolder/Multitool/PlayerRayCast
-	Game.UI = Game.camera.get_node("UI_Viewport2Dto3D").get_scene_instance()
+	Game.UI = $LeftHandController/UI_Viewport2Dto3D.get_scene_instance()#Game.camera.get_node("UI_Viewport2Dto3D").get_scene_instance()
 	
 	if multitoolcontrollerselection == MultiToolController.RIGHT:
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
