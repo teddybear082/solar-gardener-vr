@@ -497,6 +497,8 @@ func start_planting_animation(pos: Vector3):
 	$ModelMultitool.seed_shot()
 	$Cooldown.start(1)
 	Audio.play("ui_activate1")
+	if fake_seed == null:
+		return
 	$SeedFlyTween.interpolate_property(fake_seed, "global_translation", fake_seed.global_translation, pos, .2)
 	$SeedFlyTween.interpolate_property(fake_seed, "scale", fake_seed.scale, fake_seed.scale * 4.0, .2)
 	$SeedFlyTween.start()

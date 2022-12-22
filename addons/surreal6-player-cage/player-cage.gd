@@ -21,6 +21,8 @@ export (float, 0.0, 1.0) var eye_forward_offset : float = 0.66
 export var speed := 30
 export var gravity_multiplier := 3.0
 export var jump_acceleration := 950
+export var jetpack_fuel := 1.0
+export var unlocked_jetpack := false
 export var ground_friction := 0.1
 export var air_friction := 0.05
 
@@ -58,7 +60,7 @@ export (XRTools.Buttons) var jump_button_id : int = XRTools.Buttons.VR_BUTTON_AX
 onready var _direct_movement_controller : ARVRController = _right_controller
 onready var _turn_controller : ARVRController = _left_controller
 onready var _jump_controller : ARVRController = _left_controller
-onready var _jetpack_controller : ARVRController = _left_controller
+#onready var _jetpack_controller : ARVRController = _left_controller
 
 onready var look_direction = -arvrcamera.transform.basis.z
 var last_target_up := Vector3.ZERO
@@ -67,8 +69,11 @@ onready var target_look = -arvrcamera.transform.basis.z
 # Collision node
 onready var _collision_node : CollisionShape = $CollisionShape
 
+#Footstep threshold for audio
+const footstep_thresh = 0.2
+
 func _ready():
-	pass
+	_jump_controller.connect("button_release", self, "_on_jump_controller_button_released")
 	
 func set_enabled(new_value) -> void:
 	enabled = new_value
@@ -118,6 +123,13 @@ func _physics_process(delta) -> void:
 
 		var trigger_jump : bool = is_on_floor() and jump_button_pressed and !has_jumped
 
+		var trigger_jetpack = unlocked_jetpack and (not is_on_floor()) and jump_button_pressed and jump_action_released_after_jump and has_jumped and (jetpack_fuel>0.0)
+	
+		if trigger_jetpack and not "jetpack" in Audio.playing:
+			Audio.fade_in("jetpack", 0.1, true)
+		if not trigger_jetpack and "jetpack" in Audio.playing:
+			Audio.fade_out("jetpack", 0.1)
+			
 		if movement_disabled:
 			input_axis = Vector2.ZERO
 			input_axis_turn = 0.0
@@ -127,6 +139,14 @@ func _physics_process(delta) -> void:
 		direction = get_input_direction()
 		gravity_direction = calc_gravity_direction()
 		
+		if trigger_jetpack:
+#			print(jetpack_fuel)
+			velocity += jump_acceleration * delta * transform.basis.y * 0.04
+			jetpack_fuel -= delta * .7
+		
+		$JetpackLight.visible = trigger_jetpack
+		$JetpackFlames/Particles.emitting = trigger_jetpack
+		
 		if trigger_jump:
 			snap = Vector3.ZERO
 			velocity += jump_acceleration * delta * arvrorigin.transform.basis.y
@@ -135,7 +155,8 @@ func _physics_process(delta) -> void:
 		elif is_on_floor():
 			if has_jumped:
 				has_jumped = false
-				jump_button_pressed = false
+				#jump_button_pressed = false
+				jetpack_fuel = 1.0
 			snap = gravity_direction
 		
 		var planet_gravity_modifier : float = Game.planet.gravity_modifier
@@ -146,10 +167,27 @@ func _physics_process(delta) -> void:
 		up_direction = -gravity_direction
 		velocity = move_and_slide_with_snap(velocity, snap, up_direction, 
 				stop_on_slope, 4, floor_max_angle)
+		
+		if direction.length() > footstep_thresh and is_on_floor():
+#		if Game.player_is_in_shed:
+#			Audio.start_footsteps("wood")
+#		else:
+			var prefix: String = Game.planet.music_prefix
+		
+		# dirty (heh) last minute hack
+#		if prefix == "dirt":
+#			prefix = "sand"
+#		elif prefix == "sand":
+#			prefix = "dirt"
+			Audio.start_footsteps(prefix)
+		else:
+			Audio.stop_footsteps()
+		
 				
 		arvrorigin.global_translation = global_translation
 		arvrorigin.global_rotation = global_rotation
 		arvrcamera.global_rotation = global_rotation
+
 
 #func update_look_direction():
 #	look_direction = -ARVRCamera.transform.basis.z
@@ -223,9 +261,15 @@ func set_jumping_controller(string_of_controller_side : String):
 		_jump_controller = _right_controller
 	
 	
-func set_jetpack_controller(string_of_controller_side : String):
-	if string_of_controller_side == "left":
-		_jetpack_controller = _left_controller
-		
-	if string_of_controller_side == "right":
-		_jetpack_controller = _right_controller
+#func set_jetpack_controller(string_of_controller_side : String):
+#	if string_of_controller_side == "left":
+#		_jetpack_controller = _left_controller
+#
+#	if string_of_controller_side == "right":
+#		_jetpack_controller = _right_controller
+
+func _on_jump_controller_button_released(button):
+	if button == jump_button_id:
+		if not jump_action_released_after_jump:
+			jump_action_released_after_jump = true
+		jump_button_pressed = false

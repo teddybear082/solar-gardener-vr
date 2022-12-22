@@ -23,10 +23,11 @@ albedo_color = Color( 0.8, 0.8, 1, 0.5 )
 script = ExtResource( 1 )
 
 [node name="PokeBody" type="RigidBody" parent="."]
-collision_layer = 131072
-collision_mask = 589823
+collision_layer = 655360
+collision_mask = 557056
 gravity_scale = 0.0
 custom_integrator = true
+continuous_cd = true
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 2 )

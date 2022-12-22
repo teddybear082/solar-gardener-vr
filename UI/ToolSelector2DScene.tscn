@@ -24,6 +24,8 @@ margin_left = 448.0
 margin_top = 4.0
 margin_right = 679.0
 margin_bottom = 486.0
+action_mode = 0
+button_mask = 7
 texture_normal = ExtResource( 3 )
 
 [node name="GrowButton" type="TextureButton" parent="."]
@@ -31,9 +33,12 @@ margin_left = 806.0
 margin_top = -2.0
 margin_right = 1105.0
 margin_bottom = 297.0
+action_mode = 0
+button_mask = 7
 texture_normal = ExtResource( 1 )
 
 [node name="CoolDownTimer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 0.2
 one_shot = true
 
