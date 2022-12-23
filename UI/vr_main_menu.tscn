@@ -1,0 +1,130 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Assets/Textures/skybox.png" type="Texture" id=1]
+[ext_resource path="res://Objects/MainMenuShed.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Fonts/Anita semi square.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/vr_main_menu.gd" type="Script" id=5]
+[ext_resource path="res://addons/godot-xr-tools/staging/loading_screen.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Sprites/splash.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sound/music_rock_2.ogg" type="AudioStream" id=8]
+[ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Materials/alienhandmaterial.tres" type="Material" id=11]
+[ext_resource path="res://UI/main_menu_tool_pickable.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Assets/Fonts/ShedFont.tres" type="DynamicFont" id=13]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=15]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=16]
+[ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=17]
+[ext_resource path="res://addons/godot-xr-tools/functions/function_pickup.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Assets/Sound/hop_landing2.ogg" type="AudioStream" id=19]
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 1, 1, 0.05 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 1, 1, 0.05 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 512
+outline_size = 20
+outline_color = Color( 0.278431, 0.882353, 0.105882, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+
+[node name="vr_main_menu" type="Spatial"]
+script = ExtResource( 5 )
+
+[node name="Shed" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="main_menu_tool_pickable" parent="Shed" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.743551, 1.08571, -1.10322 )
+
+[node name="grab_tool_label3D" type="Label3D" parent="Shed"]
+transform = Transform( 0.939268, -0.0690889, 0.336158, 0, 0.979526, 0.201317, -0.343184, -0.189091, 0.920038, -1.07507, 1.41743, -1.48695 )
+pixel_size = 0.001
+text = "Grab this 
+gardening 
+tool to 
+start the 
+game!"
+font = ExtResource( 13 )
+
+[node name="Wall1" type="StaticBody" parent="Shed"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.18095, 1.04289, 1.00529 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Shed/Wall1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0442824, 0, 0.150176 )
+shape = SubResource( 3 )
+
+[node name="Wall2" type="StaticBody" parent="Shed"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.22965, 1.24479, 1.27274 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Shed/Wall2"]
+shape = SubResource( 4 )
+
+[node name="TitleLabel3D" type="Label3D" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.3474, 1.25404, 0.530586 )
+visible = false
+pixel_size = 0.001
+modulate = Color( 0.278431, 0.882353, 0.105882, 1 )
+outline_modulate = Color( 0.0196078, 0.423529, 0.054902, 1 )
+text = "Solar
+Gardener
+VR"
+font = SubResource( 5 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="FPController" parent="." instance=ExtResource( 4 )]
+transform = Transform( -0.097444, 0, 0.995241, 0, 1, 0, -0.995241, 0, -0.097444, 0, 0, 0 )
+
+[node name="ARVRCamera" parent="FPController" index="1"]
+far = 1000.0
+
+[node name="LeftHand" parent="FPController/LeftHandController" index="0" instance=ExtResource( 9 )]
+hand_material_override = ExtResource( 11 )
+
+[node name="MovementDirect" parent="FPController/LeftHandController" index="1" instance=ExtResource( 15 )]
+enabled = true
+order = 10
+max_speed = 2.0
+strafe = true
+
+[node name="FunctionPickup" parent="FPController/LeftHandController" index="2" instance=ExtResource( 18 )]
+
+[node name="RightHand" parent="FPController/RightHandController" index="0" instance=ExtResource( 10 )]
+hand_material_override = ExtResource( 11 )
+
+[node name="MovementTurn" parent="FPController/RightHandController" index="1" instance=ExtResource( 16 )]
+turn_mode = 2
+
+[node name="FunctionPickup" parent="FPController/RightHandController" index="2" instance=ExtResource( 18 )]
+
+[node name="PlayerBody" parent="FPController" instance=ExtResource( 17 )]
+
+[node name="LoadingScreen" parent="." instance=ExtResource( 6 )]
+splash_screen = ExtResource( 7 )
+enable_press_to_continue = true
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="TransitionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+
+[connection signal="picked_up" from="Shed/main_menu_tool_pickable" to="." method="_on_main_menu_tool_pickable_picked_up"]
+[connection signal="continue_pressed" from="LoadingScreen" to="." method="_on_LoadingScreen_continue_pressed"]
+
+[editable path="FPController"]

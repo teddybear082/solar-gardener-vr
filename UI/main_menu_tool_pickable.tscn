@@ -1,0 +1,43 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/godot-xr-tools/hands/animations/left/Default pose.anim" type="Animation" id=1]
+[ext_resource path="res://addons/godot-xr-tools/hands/animations/left/Grip Shaft.anim" type="Animation" id=2]
+[ext_resource path="res://addons/godot-xr-tools/hands/animations/right/Default pose.anim" type="Animation" id=3]
+[ext_resource path="res://addons/godot-xr-tools/hands/animations/right/Grip Shaft.anim" type="Animation" id=4]
+[ext_resource path="res://addons/godot-xr-tools/objects/pickable.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/GLTF/Multitool.gltf" type="PackedScene" id=6]
+[ext_resource path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/godot-xr-tools/hands/poses/hand_pose_settings.gd" type="Script" id=9]
+
+[sub_resource type="CylinderShape" id=3]
+margin = 0.001
+height = 0.3
+radius = 0.06
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 9 )
+open_pose = ExtResource( 3 )
+closed_pose = ExtResource( 4 )
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 9 )
+open_pose = ExtResource( 1 )
+closed_pose = ExtResource( 2 )
+
+[node name="main_menu_tool_pickable" instance=ExtResource( 5 )]
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0233209, 0 )
+shape = SubResource( 3 )
+
+[node name="Multitool" parent="." index="1" instance=ExtResource( 6 )]
+transform = Transform( -0.299998, 0, 0.000979157, 0.00097902, 0.00502106, 0.299956, -1.6388e-05, 0.299958, -0.00502104, 0, 0, 0 )
+
+[node name="GrabPointHandRight" parent="." index="2" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.031, 0.003, -0.07 )
+hand_pose = SubResource( 1 )
+
+[node name="GrabPointHandLeft" parent="." index="3" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026, -0.002, -0.07 )
+hand_pose = SubResource( 2 )

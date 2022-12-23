@@ -495,7 +495,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Solar Gardener VR"
-run/main_scene="res://Logic/MainScene.tscn"
+run/main_scene="res://UI/vr_main_menu.tscn"
 config/icon="res://Assets/Sprites/plant_group.webp"
 
 [audio]

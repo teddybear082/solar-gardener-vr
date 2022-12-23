@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Hold trigger to continue.png-ce0a3a4de13c262f7015326bad2cb09d.s3tc.stex"
-path.etc2="res://.import/Hold trigger to continue.png-ce0a3a4de13c262f7015326bad2cb09d.etc2.stex"
+path.s3tc="res://.import/splash.png-b5ac65a777a4f4ae1cb09a9d6efe8121.s3tc.stex"
+path.etc2="res://.import/splash.png-b5ac65a777a4f4ae1cb09a9d6efe8121.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/godot-xr-tools/assets/misc/Hold trigger to continue.png"
-dest_files=[ "res://.import/Hold trigger to continue.png-ce0a3a4de13c262f7015326bad2cb09d.s3tc.stex", "res://.import/Hold trigger to continue.png-ce0a3a4de13c262f7015326bad2cb09d.etc2.stex" ]
+source_file="res://Assets/Sprites/splash.png"
+dest_files=[ "res://.import/splash.png-b5ac65a777a4f4ae1cb09a9d6efe8121.s3tc.stex", "res://.import/splash.png-b5ac65a777a4f4ae1cb09a9d6efe8121.etc2.stex" ]
 
 [params]
 
