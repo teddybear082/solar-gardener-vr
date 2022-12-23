@@ -93,7 +93,7 @@ func tutorial_beginning():
 	# show amber tutorial box 
 	if Game.number_of_ambers > 0:
 		return  # player has already done this before tutorial even began
-	Game.UI.add_tutorial_message("Find Seed", "Use the scanner on an Amber relic to unlock a new seed.", duration)
+	Game.UI.add_tutorial_message("Find Seed", "Use the scanner (tap multi-tool wrist menu: left icon with your index finger) on an Amber relic to unlock a new seed.  Multitool hand trigger button fires the beam.", duration)
 	$RepeatTimer.start(repeat_time)
 	repeat_this = "tutorial_beginning"
 
@@ -108,7 +108,7 @@ func tutorial_amber_collected():
 	# unlock next tool 
 	# show next tutorial box
 	Game.multitool.activate_tool(Game.multitool.TOOL.PLANT)
-	Game.UI.add_tutorial_message("Plant Seed", "Use the planting tool (2) to plant the seed.", duration)
+	Game.UI.add_tutorial_message("Plant Seed", "Use the planting tool (tap multi-tool wrist menu: middle icon with your index finger) to plant the seed. To toggle the multitool wrist menu, use multitool hand A/X button.", duration)
 	
 	# when repeating, next will be called multiple times, but maybe it's no problem
 	# should just keep it in mind
@@ -122,7 +122,7 @@ func tutorial_seed_planted():
 	if not $RepeatTimer.is_stopped():
 		$RepeatTimer.stop()
 	# unlock next tool 
-	Game.UI.add_tutorial_message("Speed up growth", "Use the growth tool (3) to speed up growing.", duration)
+	Game.UI.add_tutorial_message("Speed up growth", "Use the growth tool (tap multi-tool wrist menu: right icon with your index finger) to speed up growing. To JUMP use the offhand trigger button.", duration)
 	Game.multitool.activate_tool(Game.multitool.TOOL.GROW)
 
 	next()
@@ -134,7 +134,7 @@ func seed_planted():
 func tutorial_plant_reached_stage1():
 	if not $RepeatTimer.is_stopped():
 		$RepeatTimer.stop()
-	Game.UI.add_tutorial_message("Scan plants", "Use the scanner (1) to unlock plant information.", duration)
+	Game.UI.add_tutorial_message("Scan plants", "Use the scanner (tap multi-tool wrist menu: left icon with your index finger) to unlock plant information.", duration)
 
 	next()
 	
@@ -150,7 +150,7 @@ func tutorial_plant_scanned():
 	$RepeatTimer.stop()
 	repeat_this = ""
 	yield(get_tree().create_timer(2.5), "timeout")
-	Game.UI.add_tutorial_message("Open the journal", "Use the Journal (TAB) to see plant information.", duration)
+	Game.UI.add_tutorial_message("Open the journal", "Use the Journal (press off-hand Y / B button) to see plant information. Select journal items by tapping with the gray sphere on the multitool.", duration)
 	Game.UI.get_node("JournalAndGuideUI").unlock_journal()
 
 	next()
@@ -160,14 +160,14 @@ func tutorial_growth_reached():
 	next()
 	yield(get_tree().create_timer(16.0), "timeout")
 	# TODO show this getting seeds message once more when player has no seeds
-	Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool (3) on grown plants to harvest seeds.", duration)
+	Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool (tap multi-tool wrist menu: right icon with your index finger) on grown plants to harvest seeds.", duration)
 	yield(get_tree().create_timer(30.0), "timeout")
 	if get_event_from_key("seeds_harvested").execute_count == 0:
-		Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool (3) on grown plants to harvest seeds.", duration)
+		Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool (tap multi-tool wrist menu: right icon with your index finger) on grown plants to harvest seeds.", duration)
 
 	
 func no_seeds():  # TODO not connected yet
-	Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool on grown plants to harvest seeds.", duration)	
+	Game.UI.add_tutorial_message("Getting seeds", "Use the grow-tool (tap multi-tool wrist menu: right icon with your index finger) on grown plants to harvest seeds.", duration)	
 	
 
 #func check_for_tutorial_completed():
@@ -179,7 +179,7 @@ func no_seeds():  # TODO not connected yet
 func tutorial_completed():
 	Game.multitool.activate_tool(Game.multitool.TOOL.HOPPER)
 	yield(get_tree().create_timer(4.0), "timeout")
-	Game.UI.add_tutorial_message("Traveling", "Point to a planet and click to travel.", duration)
+	Game.UI.add_tutorial_message("Traveling", "Point to a planet with your multitool and press trigger on multitool hand to travel.", duration)
 
 	next()
 	
@@ -195,7 +195,7 @@ func soil_unlocked():
 func remove_unlocked():
 	Game.multitool.death_beam_unlocked = true
 	yield(get_tree().create_timer(4.0), "timeout")
-	Game.UI.add_tutorial_message("Removing Plants", "Use right click with the grow tool to remove plants.", duration)
+	Game.UI.add_tutorial_message("Removing Plants", "Hold the grip button on your multitool hand with the grow tool to remove plants.", duration)
 
 	# TODO Show Remove Tooltip now!
 	next()
@@ -203,11 +203,11 @@ func remove_unlocked():
 func jetpack_unlocked():
 	Game.player.unlocked_jetpack = true
 	yield(get_tree().create_timer(4.0), "timeout")
-	Game.UI.add_tutorial_message("Jetpack", "Press space after jumping to use your jetpack.", duration)
+	Game.UI.add_tutorial_message("Jetpack", "Press jump button (off-hand trigger) again after jumping to use your jetpack.", duration)
 	next()
 
 func gear_scanned():
-	Game.UI.add_tutorial_message("Tool Upgrades", "Go to the shed to upgrade the Yardintool.", duration)
+	Game.UI.add_tutorial_message("Tool Upgrades", "Go to the shed to upgrade the Yardintool. Click trigger on multitool hand while pointing at the upgrade station.", duration)
 	next()
 
 var first_hop := true

@@ -78,6 +78,7 @@ wait_time = 0.2
 
 [node name="Crosshair" parent="." instance=ExtResource( 3 )]
 unique_name_in_owner = true
+visible = false
 
 [node name="Toolbar" parent="." instance=ExtResource( 8 )]
 anchor_left = 0.3
@@ -107,7 +108,7 @@ alignment = 2
 unique_name_in_owner = true
 visible = false
 margin_top = 46.0
-margin_right = 108.0
+margin_right = 178.0
 margin_bottom = 71.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -117,9 +118,9 @@ text = "Remove Plant"
 [node name="MultitoolC" type="Label" parent="HotkeyGuide/Controls"]
 unique_name_in_owner = true
 visible = false
-margin_top = 18.0
+margin_top = 29.0
 margin_right = 229.0
-margin_bottom = 71.0
+margin_bottom = 82.0
 grow_horizontal = 0
 grow_vertical = 0
 custom_fonts/font = ExtResource( 9 )
@@ -155,33 +156,33 @@ alignment = 2
 unique_name_in_owner = true
 visible = false
 margin_top = 46.0
-margin_right = 49.0
+margin_right = 168.0
 margin_bottom = 71.0
 custom_fonts/font = ExtResource( 9 )
-text = "Right Click"
+text = "Multitool Grip"
 
 [node name="MultitoolA" type="Label" parent="HotkeyGuide/Actions"]
 unique_name_in_owner = true
 visible = false
 margin_top = 46.0
-margin_right = 51.0
+margin_right = 49.0
 margin_bottom = 71.0
 custom_fonts/font = ExtResource( 9 )
-text = "TAB"
+text = "Trigger"
 
 [node name="JournalA" type="Label" parent="HotkeyGuide/Actions"]
 margin_top = 75.0
-margin_right = 51.0
+margin_right = 48.0
 margin_bottom = 100.0
 custom_fonts/font = ExtResource( 9 )
-text = "TAB"
+text = "Y/B"
 
 [node name="SettingsA" type="Label" parent="HotkeyGuide/Actions"]
 margin_top = 104.0
-margin_right = 51.0
+margin_right = 48.0
 margin_bottom = 129.0
 custom_fonts/font = ExtResource( 9 )
-text = "ESC"
+text = "X/A"
 
 [node name="DialogUI" parent="." instance=ExtResource( 11 )]
 plant_scanned_color = Color( 0.317647, 0.694118, 0.607843, 1 )
@@ -205,13 +206,16 @@ anchor_bottom = 1.0
 [node name="SkipCutsceneText" type="Label" parent="SkipCutsceneLabel/Controls"]
 unique_name_in_owner = true
 margin_right = 1152.0
-margin_bottom = 30.0
+margin_bottom = 129.0
 grow_horizontal = 0
 grow_vertical = 0
 rect_pivot_offset = Vector2( 576, 15 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 5 )
-text = "(Hold SPACE to skip)"
+text = "Thumbsticks: move and turn
+Multiool Hand: Trigger to activate
+Use off-hand index finger to
+select tool from multitool wrist menu"
 align = 1
 autowrap = true
 

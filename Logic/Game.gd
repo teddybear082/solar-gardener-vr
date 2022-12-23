@@ -56,7 +56,7 @@ var number_of_logs := 0 setget set_number_of_logs
 var number_of_max_lv := 0 setget set_number_of_max_lv
 
 # vr settings and journal buttons
-var vr_settings_button = XRTools.Buttons.VR_PAD
+var vr_settings_button = XRTools.Buttons.VR_BUTTON_AX
 var vr_journal_button = XRTools.Buttons.VR_BUTTON_BY
 
 # move down

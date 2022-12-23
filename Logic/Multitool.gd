@@ -20,10 +20,10 @@ var tool_unlocked = {
 	TOOL.HOPPER: false,
 }
 const tooltips := {
-	TOOL.PLANT: ["Click", "Plant a seed"],
-	TOOL.ANALYSIS: ["Click", "Scan object"],
-	TOOL.GROW: ["\nClick", "Growth boost &\nHarvest seeds"],
-	TOOL.HOPPER: ["Click", "Hop to planet"],
+	TOOL.PLANT: ["Trigger", "Plant a seed"],
+	TOOL.ANALYSIS: ["Trigger", "Scan object"],
+	TOOL.GROW: ["\nTrigger", "Growth boost &\nHarvest seeds"],
+	TOOL.HOPPER: ["Trigger", "Hop to planet"],
 }
 
 # Preloads
