@@ -92,6 +92,36 @@ the game!"
 font = ExtResource( 13 )
 horizontal_alignment = 0
 
+[node name="choose_move_speed_label3D" type="Label3D" parent="Shed"]
+transform = Transform( 0.915534, 0.10391, -0.388586, -0.0162238, 0.97481, 0.222445, 0.401912, -0.197352, 0.894158, -0.460711, 1.40468, -1.61611 )
+pixel_size = 0.001
+text = "Choose
+movement and
+turn speed:
+
+Slow:
+Medium:
+Fast:"
+font = ExtResource( 13 )
+horizontal_alignment = 0
+
+[node name="controlsLabel3D" type="Label3D" parent="Shed"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.995661, 2.37235, -2.1109 )
+pixel_size = 0.001
+text = "Controls
+Move: Off-hand stick
+Turn: Multitool hand stick
+Jump: Off-hand trigger
+Journal toggle: Off-hand Y/B
+Settings toggle: Off-hand A/X
+Toggle Tool Select Menu:
+      Multitool hand A/X
+
+Multitool Primary: Trigger
+Multitool Secondary: Grip"
+font = ExtResource( 13 )
+horizontal_alignment = 0
+
 [node name="Wall1" type="StaticBody" parent="Shed"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.18095, 1.04289, 1.00529 )
 
@@ -105,21 +135,8 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.22965
 [node name="CollisionShape" type="CollisionShape" parent="Shed/Wall2"]
 shape = SubResource( 4 )
 
-[node name="choose_move_speed_label3D" type="Label3D" parent="Shed"]
-transform = Transform( 0.924417, 0.099406, -0.3682, -0.0162238, 0.97481, 0.222445, 0.381038, -0.199659, 0.902744, -0.45628, 1.40468, -1.59758 )
-pixel_size = 0.001
-text = "Choose
-movement and
-turn speed:
-
-Slow:
-Medium:
-Fast:"
-font = ExtResource( 13 )
-horizontal_alignment = 0
-
 [node name="SlowMoveArea" type="Area" parent="Shed"]
-transform = Transform( 0.921023, 0.138125, -0.364197, -0.016949, 0.94834, 0.316805, 0.389141, -0.285611, 0.875783, -0.264361, 1.32882, -1.50885 )
+transform = Transform( 0.921023, 0.138125, -0.364197, -0.041039, 0.964221, 0.261907, 0.387342, -0.226275, 0.893737, -0.264361, 1.32882, -1.50885 )
 collision_layer = 0
 collision_mask = 131072
 
@@ -130,7 +147,7 @@ mesh = SubResource( 8 )
 shape = SubResource( 9 )
 
 [node name="MediumMoveArea" type="Area" parent="Shed"]
-transform = Transform( 0.914135, 0.0709228, -0.399159, 0.0255847, 0.972524, 0.231392, 0.404602, -0.221736, 0.887204, -0.18352, 1.26102, -1.45183 )
+transform = Transform( 0.914135, 0.0709229, -0.399158, 0.0255847, 0.972524, 0.231392, 0.404602, -0.221736, 0.887204, -0.18352, 1.26102, -1.45183 )
 collision_layer = 0
 collision_mask = 131072
 
