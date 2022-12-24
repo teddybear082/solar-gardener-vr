@@ -30,8 +30,8 @@ func _ready() -> void:
 			planet = planet as Planet
 			planet.render_multi_mesh = (value >= .7)
 		Game.planet.trigger_lod(false)
-		Game.main_scene.resolution_scaling_factor = value
-		Game.main_scene.root_viewport_size_changed()
+#		Game.main_scene.resolution_scaling_factor = value
+#		Game.main_scene.root_viewport_size_changed()
 	start_loading()
 	
 #	$Planet/AudioStreamPlayer.play()
