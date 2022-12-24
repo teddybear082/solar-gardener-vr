@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/hands/animations/left/AnimationPlayer.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/godot-xr-tools/hands/model/Hand_L.gltf" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-tools/hands/model/hand_l.gltf" type="PackedScene" id=2]
 [ext_resource path="res://addons/godot-xr-tools/hands/hand.gd" type="Script" id=3]
 [ext_resource path="res://addons/godot-xr-tools/hands/materials/cleaning_glove.material" type="Material" id=4]
 [ext_resource path="res://addons/godot-xr-tools/hands/poses/pose_default_left.tres" type="Resource" id=5]

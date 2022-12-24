@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Assets/Textures/skybox.png" type="Texture" id=1]
 [ext_resource path="res://Objects/MainMenuShed.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Assets/Materials/alienhandmaterial.tres" type="Material" id=11]
 [ext_resource path="res://UI/main_menu_tool_pickable.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Fonts/ShedFontSmall.tres" type="DynamicFont" id=13]
+[ext_resource path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" type="PackedScene" id=14]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=16]
 [ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=17]
@@ -169,6 +170,8 @@ transform = Transform( -0.097444, 0, 0.995241, 0, 1, 0, -0.995241, 0, -0.097444,
 
 [node name="ARVRCamera" parent="FPController" index="1"]
 far = 1000.0
+
+[node name="VRCommonShaderCache" parent="FPController/ARVRCamera" index="0" instance=ExtResource( 14 )]
 
 [node name="LeftHand" parent="FPController/LeftHandController" index="0" instance=ExtResource( 9 )]
 hand_material_override = ExtResource( 11 )

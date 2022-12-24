@@ -7,7 +7,7 @@ var planet_list := []
 var skip_allowed := false
 
 func _ready() -> void:
-	if OS.has_feature("HTML5"):
+	if OS.has_feature("HTML5") or OS.get_name().to_lower() == "android":
 		$WorldEnvironment.environment.background_energy = SKY_ENERGY_HTML5
 	else:
 		$WorldEnvironment.environment.background_energy = SKY_ENERGY_NATIVE
@@ -23,7 +23,15 @@ func _ready() -> void:
 			planet_list.append(c)
 	Game.planet = $Planet  # this is the starting planet
 	Game.planet.set_player_is_on_planet(true)
-	
+	if OS.get_name().to_lower() == "android":
+		var value = .5
+		Game.world.get_node("Stars").visible = (value >= .7)
+		for planet in Game.planet_list:
+			planet = planet as Planet
+			planet.render_multi_mesh = (value >= .7)
+		Game.planet.trigger_lod(false)
+		Game.main_scene.resolution_scaling_factor = value
+		Game.main_scene.root_viewport_size_changed()
 	start_loading()
 	
 #	$Planet/AudioStreamPlayer.play()
