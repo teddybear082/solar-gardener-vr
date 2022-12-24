@@ -44,7 +44,7 @@ nodes/OpenHand/node = SubResource( 5 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 6 )
 nodes/Trigger/position = Vector2( -360, 20 )
-node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
+node_connections = [ "output", 0, "Grip", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1" ]
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Grip"
@@ -75,7 +75,7 @@ nodes/OpenHand/node = SubResource( 11 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 12 )
 nodes/Trigger/position = Vector2( -360, 40 )
-node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
+node_connections = [ "output", 0, "Grip", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1" ]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.585416
@@ -155,6 +155,7 @@ enabled = false
 tree_root = SubResource( 13 )
 
 [node name="Player-cage" parent="." index="4" instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.007, 0 )
 player_radius = 0.3
 jump_button_id = 15
 

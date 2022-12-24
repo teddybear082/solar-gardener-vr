@@ -34,7 +34,7 @@ var input_axis_turn := 0.0
 var velocity := Vector3()
 var snap := Vector3()
 var up_direction := Vector3.UP
-var stop_on_slope := false
+var stop_on_slope := true
 
 var movement_disabled = false
 var has_jumped = false
@@ -77,6 +77,7 @@ const footstep_thresh = 0.2
 
 func _ready():
 	_jump_controller.connect("button_release", self, "_on_jump_controller_button_released")
+
 	
 func set_enabled(new_value) -> void:
 	enabled = new_value
@@ -113,6 +114,7 @@ func _physics_process(delta) -> void:
 	if Game.game_state == Game.State.LOADING or Game.game_state == Game.State.INTRO_FLIGHT or Game.game_state == Game.State.WARPING:
 		return 
 	global_rotation = arvrcamera.global_rotation
+	
 	if Game.planet != null:
 		input_axis = Vector2(_direct_movement_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_Y_AXIS),
 			_direct_movement_controller.get_joystick_axis(XRTools.Axis.VR_PRIMARY_X_AXIS))
@@ -185,12 +187,14 @@ func _physics_process(delta) -> void:
 		else:
 			Audio.stop_footsteps()
 		
-				
-		arvrorigin.global_translation = global_translation
+		
+		
 		arvrorigin.global_rotation = global_rotation
 		arvrcamera.global_rotation = global_rotation
-
-
+		transform.basis.z = arvrcamera.transform.basis.z
+		arvrorigin.global_translation = global_translation + (look_direction.normalized()*eye_forward_offset*player_radius)
+		
+	
 #func update_look_direction():
 #	look_direction = -ARVRCamera.transform.basis.z
 #	target_look = -ARVRCamera.transform.basis.z
@@ -223,9 +227,9 @@ func orient_player_sphere(delta: float):
 	test_t.origin = Game.planet.to_global(test_t.origin)
 	global_transform = test_t
 	last_target_up = target_up
-	
 	look_direction = -transform.basis.z
-
+	
+	
 func get_input_direction() -> Vector3:
 	direction = transform.basis.z * -input_axis.x + transform.basis.x * input_axis.y
 	return direction
