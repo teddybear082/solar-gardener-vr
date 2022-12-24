@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Assets/Textures/skybox.png" type="Texture" id=1]
 [ext_resource path="res://Objects/MainMenuShed.tscn" type="PackedScene" id=2]
@@ -12,7 +12,7 @@
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/Materials/alienhandmaterial.tres" type="Material" id=11]
 [ext_resource path="res://UI/main_menu_tool_pickable.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Assets/Fonts/ShedFont.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Assets/Fonts/ShedFontSmall.tres" type="DynamicFont" id=13]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=16]
 [ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=17]
@@ -24,6 +24,27 @@ extents = Vector3( 1, 1, 0.05 )
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 1, 1, 0.05 )
+
+[sub_resource type="QuadMesh" id=8]
+size = Vector2( 0.04, 0.04 )
+
+[sub_resource type="BoxShape" id=9]
+margin = 0.005
+extents = Vector3( 0.015, 0.015, 0.015 )
+
+[sub_resource type="QuadMesh" id=10]
+size = Vector2( 0.04, 0.04 )
+
+[sub_resource type="BoxShape" id=11]
+margin = 0.005
+extents = Vector3( 0.015, 0.015, 0.015 )
+
+[sub_resource type="QuadMesh" id=12]
+size = Vector2( 0.04, 0.04 )
+
+[sub_resource type="BoxShape" id=13]
+margin = 0.005
+extents = Vector3( 0.015, 0.015, 0.015 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 512
@@ -40,6 +61,14 @@ panorama = ExtResource( 1 )
 background_mode = 2
 background_sky = SubResource( 1 )
 
+[sub_resource type="SphereShape" id=6]
+margin = 0.001
+radius = 0.03
+
+[sub_resource type="SphereShape" id=7]
+margin = 0.001
+radius = 0.03
+
 [node name="vr_main_menu" type="Spatial"]
 script = ExtResource( 5 )
 
@@ -50,14 +79,17 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.743551, 1.08571, -1.10322 )
 
 [node name="grab_tool_label3D" type="Label3D" parent="Shed"]
-transform = Transform( 0.939268, -0.0690889, 0.336158, 0, 0.979526, 0.201317, -0.343184, -0.189091, 0.920038, -1.07507, 1.41743, -1.48695 )
+transform = Transform( 0.939268, -0.0690889, 0.336158, 0, 0.979526, 0.201317, -0.343184, -0.189091, 0.920038, -1.35836, 1.43451, -1.3869 )
 pixel_size = 0.001
 text = "Grab this 
 gardening 
-tool to 
-start the 
-game!"
+multitool with 
+the hand you
+want to use it 
+with to start 
+the game!"
 font = ExtResource( 13 )
+horizontal_alignment = 0
 
 [node name="Wall1" type="StaticBody" parent="Shed"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.18095, 1.04289, 1.00529 )
@@ -71,6 +103,52 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.22965
 
 [node name="CollisionShape" type="CollisionShape" parent="Shed/Wall2"]
 shape = SubResource( 4 )
+
+[node name="choose_move_speed_label3D" type="Label3D" parent="Shed"]
+transform = Transform( 0.924417, 0.099406, -0.3682, -0.0162238, 0.97481, 0.222445, 0.381038, -0.199659, 0.902744, -0.45628, 1.40468, -1.59758 )
+pixel_size = 0.001
+text = "Choose
+movement and
+turn speed:
+
+Slow:
+Medium:
+Fast:"
+font = ExtResource( 13 )
+horizontal_alignment = 0
+
+[node name="SlowMoveArea" type="Area" parent="Shed"]
+transform = Transform( 0.921023, 0.138125, -0.364197, -0.016949, 0.94834, 0.316805, 0.389141, -0.285611, 0.875783, -0.264361, 1.32882, -1.50885 )
+collision_layer = 0
+collision_mask = 131072
+
+[node name="MeshInstance" type="MeshInstance" parent="Shed/SlowMoveArea"]
+mesh = SubResource( 8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Shed/SlowMoveArea"]
+shape = SubResource( 9 )
+
+[node name="MediumMoveArea" type="Area" parent="Shed"]
+transform = Transform( 0.914135, 0.0709228, -0.399159, 0.0255847, 0.972524, 0.231392, 0.404602, -0.221736, 0.887204, -0.18352, 1.26102, -1.45183 )
+collision_layer = 0
+collision_mask = 131072
+
+[node name="MeshInstance" type="MeshInstance" parent="Shed/MediumMoveArea"]
+mesh = SubResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Shed/MediumMoveArea"]
+shape = SubResource( 11 )
+
+[node name="FastMoveArea" type="Area" parent="Shed"]
+transform = Transform( 0.942634, 0.0799512, -0.324114, -0.0185689, 0.981952, 0.188219, 0.333312, -0.171403, 0.927105, -0.279235, 1.17721, -1.48151 )
+collision_layer = 0
+collision_mask = 131072
+
+[node name="MeshInstance" type="MeshInstance" parent="Shed/FastMoveArea"]
+mesh = SubResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Shed/FastMoveArea"]
+shape = SubResource( 13 )
 
 [node name="TitleLabel3D" type="Label3D" parent="."]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.3474, 1.25404, 0.530586 )
@@ -95,6 +173,13 @@ far = 1000.0
 [node name="LeftHand" parent="FPController/LeftHandController" index="0" instance=ExtResource( 9 )]
 hand_material_override = ExtResource( 11 )
 
+[node name="Area" type="Area" parent="FPController/LeftHandController/LeftHand"]
+collision_layer = 131072
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="FPController/LeftHandController/LeftHand/Area"]
+shape = SubResource( 6 )
+
 [node name="MovementDirect" parent="FPController/LeftHandController" index="1" instance=ExtResource( 15 )]
 enabled = true
 order = 10
@@ -105,6 +190,13 @@ strafe = true
 
 [node name="RightHand" parent="FPController/RightHandController" index="0" instance=ExtResource( 10 )]
 hand_material_override = ExtResource( 11 )
+
+[node name="Area" type="Area" parent="FPController/RightHandController/RightHand"]
+collision_layer = 131072
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="FPController/RightHandController/RightHand/Area"]
+shape = SubResource( 7 )
 
 [node name="MovementTurn" parent="FPController/RightHandController" index="1" instance=ExtResource( 16 )]
 turn_mode = 2
@@ -124,7 +216,17 @@ autoplay = true
 [node name="TransitionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
 
-[connection signal="picked_up" from="Shed/main_menu_tool_pickable" to="." method="_on_main_menu_tool_pickable_picked_up"]
+[node name="MenuCoolDown" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+one_shot = true
+
+[connection signal="area_entered" from="Shed/SlowMoveArea" to="." method="_on_SlowMoveArea_area_entered"]
+[connection signal="area_entered" from="Shed/MediumMoveArea" to="." method="_on_MediumMoveArea_area_entered"]
+[connection signal="area_entered" from="Shed/FastMoveArea" to="." method="_on_FastMoveArea_area_entered"]
+[connection signal="has_picked_up" from="FPController/LeftHandController/FunctionPickup" to="." method="_on_LeftFunctionPickup_has_picked_up"]
+[connection signal="has_picked_up" from="FPController/RightHandController/FunctionPickup" to="." method="_on_RightFunctionPickup_has_picked_up"]
 [connection signal="continue_pressed" from="LoadingScreen" to="." method="_on_LoadingScreen_continue_pressed"]
+[connection signal="timeout" from="MenuCoolDown" to="." method="_on_MenuCoolDown_timeout"]
 
 [editable path="FPController"]

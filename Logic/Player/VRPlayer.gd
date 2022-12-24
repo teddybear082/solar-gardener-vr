@@ -36,6 +36,22 @@ func _ready():
 	Game.player_raycast = $MultitoolHolder/Multitool/PlayerRayCast
 	Game.UI = $LeftHandController/UI_Viewport2Dto3D.get_scene_instance()#Game.camera.get_node("UI_Viewport2Dto3D").get_scene_instance()
 	
+	if Game.vr_hand_selection == Game.vr_primary_hand.LEFT:
+		multitoolcontrollerselection = MultiToolController.LEFT
+		player_body.set_direct_movement_controller("right")
+		player_body.set_jumping_controller("right")
+		var ui_viewport = $LeftHandController/UI_Viewport2Dto3D
+		$LeftHandController.remove_child(ui_viewport)
+		$RightHandController.add_child(ui_viewport)
+		
+	if Game.vr_movement_selection == Game.vr_movement_speed.SLOW:
+		player_body.set_speed(15)
+		player_body.set_turn_sensitivity(.005)
+	
+	elif Game.vr_movement_selection == Game.vr_movement_speed.FAST:
+		player_body.set_speed(35)
+		player_body.set_turn_sensitivity(.020)
+	
 	if multitoolcontrollerselection == MultiToolController.RIGHT:
 		$RightHandController/RightMultiToolRemoteTransform.set_remote_node($MultitoolHolder.get_path())
 		$RightHandController/RightHand.visible = false

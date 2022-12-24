@@ -58,7 +58,17 @@ var number_of_max_lv := 0 setget set_number_of_max_lv
 # vr settings and journal buttons
 var vr_settings_button = XRTools.Buttons.VR_BUTTON_AX
 var vr_journal_button = XRTools.Buttons.VR_BUTTON_BY
-
+enum vr_movement_speed {
+	SLOW,
+	MEDIUM,
+	FAST
+} 
+var vr_movement_selection = vr_movement_speed.MEDIUM
+enum vr_primary_hand {
+	LEFT,
+	RIGHT
+}
+var vr_hand_selection = vr_primary_hand.RIGHT
 # move down
 func set_number_of_ambers(number):
 	number_of_ambers = number
