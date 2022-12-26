@@ -75,6 +75,10 @@ onready var _collision_node : CollisionShape = $CollisionShape
 #Footstep threshold for audio
 const footstep_thresh = 0.2
 
+# SHED HARD CODE DIRTY
+var shed:Spatial
+var shed_factor := 0.0
+
 func _ready():
 	_jump_controller.connect("button_release", self, "_on_jump_controller_button_released")
 

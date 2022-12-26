@@ -61,7 +61,7 @@ func set_upgrade_screen(text: String):
 
 
 func _on_PlayerDetectArea_body_entered(body):
-	if body is Player:
+	if body.get_parent() is VRPlayer:
 		Game.player_is_in_shed = true
 		update_shed_info()
 		body.shed = self
@@ -71,7 +71,7 @@ func _on_PlayerDetectArea_body_entered(body):
 
 
 func _on_PlayerDetectArea_body_exited(body):
-	if body is Player:
+	if body.get_parent() is VRPlayer:
 		Game.player_is_in_shed = false
 		if Upgrades.is_upgrade_available():
 			$UpgradeStation.set_open(false)

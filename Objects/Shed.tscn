@@ -142,6 +142,7 @@ font = ExtResource( 4 )
 [node name="PlayerDetectArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.849967, 0, 0, 0 )
 collision_layer = 0
+collision_mask = 524289
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerDetectArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0128195, 1.23871, -0.0541698 )
