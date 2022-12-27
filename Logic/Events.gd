@@ -203,7 +203,7 @@ func remove_unlocked():
 func jetpack_unlocked():
 	Game.player.unlocked_jetpack = true
 	yield(get_tree().create_timer(4.0), "timeout")
-	Game.UI.add_tutorial_message("Jetpack", "Press jump button (off-hand trigger) again after jumping to use your jetpack.", duration)
+	Game.UI.add_tutorial_message("Jetpack", "Press off hand thumbstick in to toggle your jetpack until its fuel runs out.", duration)
 	next()
 
 func gear_scanned():

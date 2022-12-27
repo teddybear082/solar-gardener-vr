@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/Models/Modelplanet_02_obsidian.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Planet.gd" type="Script" id=2]
@@ -32,6 +32,9 @@ transform_format = 1
 instance_count = 8
 mesh = ExtResource( 13 )
 transform_array = PoolVector3Array( -0.646981, 0.26468, 0.0368708, -0.228805, -0.498742, -0.434632, -0.138071, -0.413764, 0.547481, 2.95356, -4.20052, -5.80394, -0.33964, -0.529052, -0.307812, -0.510095, 0.0500862, 0.476754, -0.338301, 0.455626, -0.409826, -5.7499, -0.305712, 5.39113, -0.053933, -0.298297, 0.63096, -0.056983, 0.63261, 0.294206, -0.695589, -0.0286951, -0.0730235, -3.05968, 6.74687, 0.828151, 0.356555, -0.160856, -0.580512, 0.5551, -0.174251, 0.389231, -0.23395, -0.658606, 0.0388013, -1.03314, -1.81566, -6.00969, -0.439527, -0.544313, -0.0232222, -0.132681, 0.135883, -0.673744, 0.528405, -0.41864, -0.188492, -5.73379, -1.81511, -0.134904, 0.5381, -0.0298821, 0.446717, 0.3359, 0.488718, -0.371922, -0.296007, 0.500262, 0.390023, -0.668315, 3.86278, 6.31022, -0.115503, 0.518474, 0.455899, -0.361291, -0.439283, 0.408043, 0.588326, -0.167974, 0.340084, 4.20225, -6.10379, -2.07017, 0.658112, -0.0199296, -0.237679, 0.202652, -0.321131, 0.588053, -0.12578, -0.621673, -0.296145, -0.38382, 0.418459, -7.0083 )
+
+[sub_resource type="SphereShape" id=15]
+radius = 22.815
 
 [node name="PlanetObsidian" type="Spatial"]
 script = ExtResource( 2 )
@@ -204,6 +207,17 @@ transform = Transform( 0.768384, 0.028697, 0.639345, -1.50844e-07, -0.998994, 0.
 
 [node name="OuterWilds" parent="." instance=ExtResource( 17 )]
 transform = Transform( 0.105812, 0.972917, 0.205515, 0.988849, -0.124731, 0.0813608, 0.104791, 0.194614, -0.975266, 7.07087, -2.53288, 0.00230767 )
+
+[node name="PlanetHopArea2" type="Area" parent="."]
+transform = Transform( 1.24458, 0, 0, 0, 1.24458, 0, 0, 0, 1.24458, 0, 0, 0 )
+collision_layer = 64
+collision_mask = 0
+space_override = 3
+gravity_point = true
+gravity_vec = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PlanetHopArea2"]
+shape = SubResource( 15 )
 
 [editable path="Model"]
 [editable path="Alien/ModelAlienRuinsPodest2"]

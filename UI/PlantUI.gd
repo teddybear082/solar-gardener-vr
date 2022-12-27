@@ -95,7 +95,8 @@ func _on_Panel_gui_input(event: InputEvent) -> void:
 		event = event as InputEventMouseButton
 		if event.pressed and event.button_index == BUTTON_LEFT and discovered:
 			emit_signal("clicked", plant_name)
-
+			emit_signal("plant_got_hovered", self)
+			
 signal plant_got_hovered(plant_ui)
 func _on_Panel_mouse_entered() -> void:
 	if not hovered and discovered:

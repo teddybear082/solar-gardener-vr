@@ -1,81 +1,99 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Materials/alienhandmaterial.tres" type="Material" id=3]
 [ext_resource path="res://addons/godot-xr-tools/player/poke/poke.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" type="PackedScene" id=6]
 [ext_resource path="res://UI/HandToolViewport.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_jump.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Effects/JetpackFlames.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Logic/Multitool.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Logic/Player/VRPlayer.gd" type="Script" id=12]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Logic/PlayerRayCast.tscn" type="PackedScene" id=14]
 [ext_resource path="res://UI/UI.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" type="PackedScene" id=16]
-[ext_resource path="res://addons/surreal6-player-cage/player-cage.tscn" type="PackedScene" id=17]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_wall_walk.tscn" type="PackedScene" id=17]
+[ext_resource path="res://addons/godot-xr-tools/functions/movement_flight.tscn" type="PackedScene" id=18]
+[ext_resource path="res://addons/godot-xr-tools/overrides/ground_physics_settings.gd" type="Script" id=19]
+[ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=20]
 
-[sub_resource type="AnimationNodeAnimation" id=2]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeBlend2" id=4]
+[sub_resource type="AnimationNodeBlend2" id=17]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Little_Distal_L", "Armature/Skeleton:Little_Intermediate_L", "Armature/Skeleton:Little_Proximal_L", "Armature/Skeleton:Middle_Distal_L", "Armature/Skeleton:Middle_Intermediate_L", "Armature/Skeleton:Middle_Proximal_L", "Armature/Skeleton:Ring_Distal_L", "Armature/Skeleton:Ring_Intermediate_L", "Armature/Skeleton:Ring_Proximal_L", "Armature/Skeleton:Thumb_Distal_L", "Armature/Skeleton:Thumb_Proximal_L" ]
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "Grip 5"
 
-[sub_resource type="AnimationNodeBlend2" id=6]
+[sub_resource type="AnimationNodeBlend2" id=19]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Index_Distal_L", "Armature/Skeleton:Index_Intermediate_L", "Armature/Skeleton:Index_Proximal_L" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=7]
+[sub_resource type="AnimationNodeBlendTree" id=20]
 graph_offset = Vector2( -798.981, 58.67 )
-nodes/ClosedHand1/node = SubResource( 2 )
+nodes/ClosedHand1/node = SubResource( 15 )
 nodes/ClosedHand1/position = Vector2( -600, 300 )
-nodes/ClosedHand2/node = SubResource( 3 )
+nodes/ClosedHand2/node = SubResource( 16 )
 nodes/ClosedHand2/position = Vector2( -360, 300 )
-nodes/Grip/node = SubResource( 4 )
+nodes/Grip/node = SubResource( 17 )
 nodes/Grip/position = Vector2( 0, 20 )
-nodes/OpenHand/node = SubResource( 5 )
+nodes/OpenHand/node = SubResource( 18 )
 nodes/OpenHand/position = Vector2( -600, 100 )
-nodes/Trigger/node = SubResource( 6 )
+nodes/Trigger/node = SubResource( 19 )
 nodes/Trigger/position = Vector2( -360, 20 )
-node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
+node_connections = [ "output", 0, "Grip", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1" ]
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeBlend2" id=10]
+[sub_resource type="AnimationNodeBlend2" id=23]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Little_Distal_R", "Armature/Skeleton:Little_Intermediate_R", "Armature/Skeleton:Little_Proximal_R", "Armature/Skeleton:Middle_Distal_R", "Armature/Skeleton:Middle_Intermediate_R", "Armature/Skeleton:Middle_Proximal_R", "Armature/Skeleton:Ring_Distal_R", "Armature/Skeleton:Ring_Intermediate_R", "Armature/Skeleton:Ring_Proximal_R", "Armature/Skeleton:Thumb_Distal_R", "Armature/Skeleton:Thumb_Proximal_R" ]
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=24]
 animation = "Grip 5"
 
-[sub_resource type="AnimationNodeBlend2" id=12]
+[sub_resource type="AnimationNodeBlend2" id=25]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Index_Distal_R", "Armature/Skeleton:Index_Intermediate_R", "Armature/Skeleton:Index_Proximal_R" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=13]
+[sub_resource type="AnimationNodeBlendTree" id=26]
 graph_offset = Vector2( -753.664, -85.6991 )
-nodes/ClosedHand1/node = SubResource( 8 )
+nodes/ClosedHand1/node = SubResource( 21 )
 nodes/ClosedHand1/position = Vector2( -600, 300 )
-nodes/ClosedHand2/node = SubResource( 9 )
+nodes/ClosedHand2/node = SubResource( 22 )
 nodes/ClosedHand2/position = Vector2( -360, 300 )
-nodes/Grip/node = SubResource( 10 )
+nodes/Grip/node = SubResource( 23 )
 nodes/Grip/position = Vector2( 0, 40 )
-nodes/OpenHand/node = SubResource( 11 )
+nodes/OpenHand/node = SubResource( 24 )
 nodes/OpenHand/position = Vector2( -600, 100 )
-nodes/Trigger/node = SubResource( 12 )
+nodes/Trigger/node = SubResource( 25 )
 nodes/Trigger/position = Vector2( -360, 40 )
-node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
+node_connections = [ "output", 0, "Grip", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1" ]
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 19 )
+flags = 28
+move_drag = 5.0
+move_traction = 30.0
+stop_on_slope = true
+move_max_slope = 60.0
+jump_max_slope = 60.0
+jump_velocity = 5.0
+bounciness = 0.0
+bounce_threshold = 1.0
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.585416
@@ -83,6 +101,7 @@ radius = 0.585416
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 12 )
 multitoolcontrollerselection = 1
+max_jetpack_fuel = 3.0
 unlocked_jetpack = false
 
 [node name="ARVRCamera" parent="." index="1"]
@@ -121,7 +140,7 @@ visible = false
 enabled = false
 
 [node name="AnimationTree" parent="LeftHandController/LeftHand" index="1"]
-tree_root = SubResource( 7 )
+tree_root = SubResource( 20 )
 
 [node name="UI_Viewport2Dto3D" parent="LeftHandController" index="2" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158014, 0.091311, 0.192568 )
@@ -131,6 +150,19 @@ unshaded = true
 scene = ExtResource( 15 )
 update_mode = 2
 collision_layer = 655360
+
+[node name="MovementDirect" parent="LeftHandController" index="3" instance=ExtResource( 2 )]
+enabled = true
+order = 10
+max_speed = 3.0
+strafe = true
+
+[node name="MovementJump" parent="LeftHandController" index="4" instance=ExtResource( 8 )]
+jump_button_id = 15
+
+[node name="MovementTurn" parent="LeftHandController" index="5" instance=ExtResource( 13 )]
+enabled = false
+turn_mode = 2
 
 [node name="RightMultiToolRemoteTransform" type="RemoteTransform" parent="RightHandController" index="0"]
 
@@ -152,32 +184,36 @@ visible = false
 enabled = false
 
 [node name="AnimationTree" parent="RightHandController/RightHand" index="1"]
-tree_root = SubResource( 13 )
+tree_root = SubResource( 26 )
 
-[node name="Player-cage" parent="." index="4" instance=ExtResource( 17 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.007, 0 )
-player_radius = 0.3
+[node name="MovementTurn" parent="RightHandController" index="2" instance=ExtResource( 13 )]
+turn_mode = 2
+
+[node name="MovementDirect" parent="RightHandController" index="3" instance=ExtResource( 2 )]
+enabled = false
+order = 10
+max_speed = 3.0
+strafe = true
+
+[node name="MovementJump" parent="RightHandController" index="4" instance=ExtResource( 8 )]
+enabled = false
 jump_button_id = 15
 
-[node name="JetpackLight" type="SpotLight" parent="Player-cage" index="3"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.385101, -0.497189 )
-visible = false
-light_color = Color( 1, 0.909804, 0.435294, 1 )
-light_energy = 0.5
-spot_range = 20.0
-spot_attenuation = 1.86607
-spot_angle = 40.9585
-spot_angle_attenuation = 2.46229
+[node name="MovementFlight" parent="." index="4" instance=ExtResource( 18 )]
+flight_button = 14
 
-[node name="JetpackFlames" parent="Player-cage" index="4" instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.379514, -0.494825 )
-visible = false
+[node name="MovementWallWalk" parent="." index="5" instance=ExtResource( 17 )]
+follow_mask = 64
+stick_distance = 30.0
 
-[node name="PickupPoint" type="Spatial" parent="." index="5"]
+[node name="PlayerBody" parent="." index="6" instance=ExtResource( 20 )]
+physics = SubResource( 14 )
+
+[node name="PickupPoint" type="Spatial" parent="." index="7"]
 unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04279, 0 )
 
-[node name="MultitoolHolder" type="Spatial" parent="." index="6"]
+[node name="MultitoolHolder" type="Spatial" parent="." index="8"]
 
 [node name="Multitool" parent="MultitoolHolder" index="0" instance=ExtResource( 11 )]
 
@@ -194,13 +230,30 @@ collision_layer = 688128
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737845, -0.155635 )
 radius = 0.01
 
-[node name="BadPlanting" type="Area" parent="." index="7"]
+[node name="BadPlanting" type="Area" parent="." index="9"]
 collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="BadPlanting" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54036, 0 )
 shape = SubResource( 1 )
+
+[node name="JetpackLight" type="SpotLight" parent="." index="10"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.378101, -0.497189 )
+visible = false
+light_color = Color( 1, 0.909804, 0.435294, 1 )
+light_energy = 0.5
+spot_range = 20.0
+spot_attenuation = 1.86607
+spot_angle = 40.9585
+spot_angle_attenuation = 2.46229
+
+[node name="JetpackFlames" parent="." index="11" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372514, -0.494825 )
+visible = false
+
+[connection signal="flight_finished" from="MovementFlight" to="." method="_on_MovementFlight_flight_finished"]
+[connection signal="flight_started" from="MovementFlight" to="." method="_on_MovementFlight_flight_started"]
 
 [editable path="LeftHandController/LeftHand"]
 [editable path="LeftHandController/LeftHand/Hand_L"]

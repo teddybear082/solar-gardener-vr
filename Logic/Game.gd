@@ -189,7 +189,7 @@ func is_ingame():
 var slerp_player_basis_a : Basis
 var slerp_player_basis_b : Basis
 func slerp_player_basis(f: float):
-	player.get_node("Player-cage").global_transform.basis = slerp_player_basis_a.slerp(slerp_player_basis_b, f)
+	player.global_transform.basis = slerp_player_basis_a.slerp(slerp_player_basis_b, f)
 
 
 func hop_music_fade(old_planet: Planet, new_planet: Planet):
@@ -208,8 +208,8 @@ func hop_music_fade(old_planet: Planet, new_planet: Planet):
 func execute_planet_hop(new_planet: Planet, pos: Vector3):
 	var sun_hot := false
 	#pos = new_planet.global_translation + new_planet.global_translation.direction_to(player.global_translation) * 10.0 - player.global_transform.basis.y * 2.0
-	var dir_to_planet = player.get_node("Player-cage").global_translation.direction_to(new_planet.global_translation)
-	pos = new_planet.global_translation + player.get_node("Player-cage").global_translation.direction_to(pos).cross(-dir_to_planet).cross(dir_to_planet).normalized() * 15.0
+	var dir_to_planet = player.global_translation.direction_to(new_planet.global_translation)
+	pos = new_planet.global_translation + player.global_translation.direction_to(pos).cross(-dir_to_planet).cross(dir_to_planet).normalized() * 15.0
 	set_game_state(State.WARPING)
 #	if not planet.planet_growth_stage == new_planet.planet_growth_stage \
 #		or new_planet.music_prefix == "obsidian":
@@ -231,10 +231,10 @@ func execute_planet_hop(new_planet: Planet, pos: Vector3):
 	#player.global_transform = Transform(new_basis, pos)
 #	var current_y_looking_angle : float = player.get_node("Head").rotation.x
 #	var target_y_looking_angle : float = -deg2rad(90.0) + player.global_translation.direction_to(pos).angle_to(pos.direction_to(planet.global_translation))
-	slerp_player_basis_a = player.get_node("Player-cage").global_transform.basis
-	slerp_player_basis_b = Utility.get_basis_y_aligned_with_z(new_planet.global_translation.direction_to(pos), -player.get_node("Player-cage").global_transform.basis.z) 
-	$WarpTween.interpolate_method(self, "slerp_player_basis", 0.0, 1.0, 1.0, Tween.TRANS_QUAD, Tween.EASE_IN)
-	$WarpTween.interpolate_property(player.get_node("Player-cage"), "global_translation", player.get_node("Player-cage").global_translation, pos, 1.0, Tween.TRANS_QUAD, Tween.EASE_IN)
+	slerp_player_basis_a = player.global_transform.basis
+	slerp_player_basis_b = Utility.get_basis_y_aligned_with_z(new_planet.global_translation.direction_to(pos), -player.global_transform.basis.z) 
+	#$WarpTween.interpolate_method(self, "slerp_player_basis", 0.0, 1.0, 1.0, Tween.TRANS_QUAD, Tween.EASE_IN)
+	$WarpTween.interpolate_property(player, "global_translation", player.global_translation, pos, 1.0, Tween.TRANS_QUAD, Tween.EASE_IN)
 #	$WarpTween.interpolate_property(player.get_node("Head"), "rotation:x", current_y_looking_angle, target_y_looking_angle, 1.0, Tween.TRANS_QUAD, Tween.EASE_IN)
 	$WarpTween.start()
 	yield(get_tree(), "idle_frame")

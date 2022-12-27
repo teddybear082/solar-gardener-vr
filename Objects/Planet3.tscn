@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Models/ModelSandPlanet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Amber.tscn" type="PackedScene" id=2]
@@ -15,6 +15,9 @@ radius = 22.8154
 
 [sub_resource type="OccluderShapeSphere" id=13]
 spheres = [ Plane( 0, 0, 0, 5.7328 ) ]
+
+[sub_resource type="SphereShape" id=14]
+radius = 22.815
 
 [node name="Planet3" type="Spatial"]
 script = ExtResource( 3 )
@@ -94,3 +97,14 @@ transform = Transform( -1.99473, 0.0720952, 1.03101, -0.0744128, -2.24532, 0.013
 
 [node name="NoteCapsule" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.777558, 0.229704, -0.585354, 0.115182, 0.863112, 0.491703, 0.618172, -0.449749, 0.644661, -3.44921, 0.356312, -4.8379 )
+
+[node name="PlanetHopArea2" type="Area" parent="."]
+transform = Transform( 1.24458, 0, 0, 0, 1.24458, 0, 0, 0, 1.24458, 0, 0, 0 )
+collision_layer = 64
+collision_mask = 0
+space_override = 3
+gravity_point = true
+gravity_vec = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PlanetHopArea2"]
+shape = SubResource( 14 )

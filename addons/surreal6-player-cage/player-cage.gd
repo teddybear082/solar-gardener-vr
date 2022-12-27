@@ -18,14 +18,14 @@ export var player_height_max : float = 2.2
 ## Eyes forward offset from center of body in player_radius units
 export (float, 0.0, 1.0) var eye_forward_offset : float = 0.66
 
-export var speed := 30 setget set_speed
+export var speed := 4 setget set_speed
 export var gravity_multiplier := 3.0
 export var jump_acceleration := 950
 export var max_jetpack_fuel := 3.0
 export var unlocked_jetpack := false
 export var ground_friction := 0.1
 export var air_friction := 0.05
-export var turn_sensitivity : float = .015 setget set_turn_sensitivity #0.005
+export var turn_sensitivity : float = 2 setget set_turn_sensitivity #0.005
 
 var direction := Vector3()
 var input_axis := Vector2.ZERO
