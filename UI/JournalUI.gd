@@ -46,10 +46,12 @@ func plant_clicked(plant_name):
 #	$"%HoverMarker".visible = false
 #		currently_hovering.hovered = false
 #		currently_hovering = null
-	Game.coming_out_of_journal = true
-	Game.get_node("SettingsOpenCooldown").start(0.4)
-	yield(get_tree(), "idle_frame")
-	Game.game_state = Game.State.INGAME
+
+	#Trying with these commented out for VR use so journal doesn't close when you select a plant
+#	Game.coming_out_of_journal = true
+#	Game.get_node("SettingsOpenCooldown").start(0.4)
+#	yield(get_tree(), "idle_frame")
+#	Game.game_state = Game.State.INGAME
 
 func discover_and_scan_all():
 	for plant_ui in get_tree().get_nodes_in_group("plant_ui"):
