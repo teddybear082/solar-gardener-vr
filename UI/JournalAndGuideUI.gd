@@ -68,3 +68,6 @@ func set_progress_logs(number):
 
 func set_progress_max(number):
 	$"%MaxProgressLabel".text = "%d / 6" % number
+
+
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=2]
@@ -21,65 +21,77 @@
 [ext_resource path="res://addons/godot-xr-tools/overrides/ground_physics_settings.gd" type="Script" id=19]
 [ext_resource path="res://addons/godot-xr-tools/player/player_body.tscn" type="PackedScene" id=20]
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="SphereMesh" id=27]
+flip_faces = true
+radius = 2.0
+height = 4.0
+
+[sub_resource type="SpatialMaterial" id=28]
+flags_transparent = true
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="AnimationNodeAnimation" id=29]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=30]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeBlend2" id=17]
+[sub_resource type="AnimationNodeBlend2" id=31]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Little_Distal_L", "Armature/Skeleton:Little_Intermediate_L", "Armature/Skeleton:Little_Proximal_L", "Armature/Skeleton:Middle_Distal_L", "Armature/Skeleton:Middle_Intermediate_L", "Armature/Skeleton:Middle_Proximal_L", "Armature/Skeleton:Ring_Distal_L", "Armature/Skeleton:Ring_Intermediate_L", "Armature/Skeleton:Ring_Proximal_L", "Armature/Skeleton:Thumb_Distal_L", "Armature/Skeleton:Thumb_Proximal_L" ]
 
-[sub_resource type="AnimationNodeAnimation" id=18]
+[sub_resource type="AnimationNodeAnimation" id=32]
 animation = "Grip 5"
 
-[sub_resource type="AnimationNodeBlend2" id=19]
+[sub_resource type="AnimationNodeBlend2" id=33]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Index_Distal_L", "Armature/Skeleton:Index_Intermediate_L", "Armature/Skeleton:Index_Proximal_L" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=20]
+[sub_resource type="AnimationNodeBlendTree" id=34]
 graph_offset = Vector2( -798.981, 58.67 )
-nodes/ClosedHand1/node = SubResource( 15 )
+nodes/ClosedHand1/node = SubResource( 29 )
 nodes/ClosedHand1/position = Vector2( -600, 300 )
-nodes/ClosedHand2/node = SubResource( 16 )
+nodes/ClosedHand2/node = SubResource( 30 )
 nodes/ClosedHand2/position = Vector2( -360, 300 )
-nodes/Grip/node = SubResource( 17 )
+nodes/Grip/node = SubResource( 31 )
 nodes/Grip/position = Vector2( 0, 20 )
-nodes/OpenHand/node = SubResource( 18 )
+nodes/OpenHand/node = SubResource( 32 )
 nodes/OpenHand/position = Vector2( -600, 100 )
-nodes/Trigger/node = SubResource( 19 )
+nodes/Trigger/node = SubResource( 33 )
 nodes/Trigger/position = Vector2( -360, 20 )
 node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
 
-[sub_resource type="AnimationNodeAnimation" id=21]
+[sub_resource type="AnimationNodeAnimation" id=35]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeAnimation" id=22]
+[sub_resource type="AnimationNodeAnimation" id=36]
 animation = "Grip"
 
-[sub_resource type="AnimationNodeBlend2" id=23]
+[sub_resource type="AnimationNodeBlend2" id=37]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Little_Distal_R", "Armature/Skeleton:Little_Intermediate_R", "Armature/Skeleton:Little_Proximal_R", "Armature/Skeleton:Middle_Distal_R", "Armature/Skeleton:Middle_Intermediate_R", "Armature/Skeleton:Middle_Proximal_R", "Armature/Skeleton:Ring_Distal_R", "Armature/Skeleton:Ring_Intermediate_R", "Armature/Skeleton:Ring_Proximal_R", "Armature/Skeleton:Thumb_Distal_R", "Armature/Skeleton:Thumb_Proximal_R" ]
 
-[sub_resource type="AnimationNodeAnimation" id=24]
+[sub_resource type="AnimationNodeAnimation" id=38]
 animation = "Grip 5"
 
-[sub_resource type="AnimationNodeBlend2" id=25]
+[sub_resource type="AnimationNodeBlend2" id=39]
 filter_enabled = true
 filters = [ "Armature/Skeleton:Index_Distal_R", "Armature/Skeleton:Index_Intermediate_R", "Armature/Skeleton:Index_Proximal_R" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=26]
+[sub_resource type="AnimationNodeBlendTree" id=40]
 graph_offset = Vector2( -753.664, -85.6991 )
-nodes/ClosedHand1/node = SubResource( 21 )
+nodes/ClosedHand1/node = SubResource( 35 )
 nodes/ClosedHand1/position = Vector2( -600, 300 )
-nodes/ClosedHand2/node = SubResource( 22 )
+nodes/ClosedHand2/node = SubResource( 36 )
 nodes/ClosedHand2/position = Vector2( -360, 300 )
-nodes/Grip/node = SubResource( 23 )
+nodes/Grip/node = SubResource( 37 )
 nodes/Grip/position = Vector2( 0, 40 )
-nodes/OpenHand/node = SubResource( 24 )
+nodes/OpenHand/node = SubResource( 38 )
 nodes/OpenHand/position = Vector2( -600, 100 )
-nodes/Trigger/node = SubResource( 25 )
+nodes/Trigger/node = SubResource( 39 )
 nodes/Trigger/position = Vector2( -360, 40 )
 node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
 
@@ -117,6 +129,11 @@ spot_range = 11.0478
 spot_angle = 37.9648
 spot_angle_attenuation = 0.297302
 
+[node name="FadeSphereMesh" type="MeshInstance" parent="ARVRCamera" index="2"]
+mesh = SubResource( 27 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 28 )
+
 [node name="LeftHandController" parent="." index="2"]
 visible = true
 
@@ -124,9 +141,6 @@ visible = true
 
 [node name="LeftHand" parent="LeftHandController" index="1" instance=ExtResource( 5 )]
 hand_material_override = ExtResource( 3 )
-
-[node name="Skeleton" parent="LeftHandController/LeftHand/Hand_L/Armature" index="0"]
-bones/8/bound_children = [ NodePath("IndexBoneAttachment") ]
 
 [node name="mesh_Hand_L" parent="LeftHandController/LeftHand/Hand_L/Armature/Skeleton" index="0"]
 material_override = ExtResource( 3 )
@@ -140,7 +154,7 @@ visible = false
 enabled = false
 
 [node name="AnimationTree" parent="LeftHandController/LeftHand" index="1"]
-tree_root = SubResource( 20 )
+tree_root = SubResource( 34 )
 
 [node name="UI_Viewport2Dto3D" parent="LeftHandController" index="2" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158014, 0.091311, 0.192568 )
@@ -169,9 +183,6 @@ turn_mode = 2
 [node name="RightHand" parent="RightHandController" index="1" instance=ExtResource( 6 )]
 hand_material_override = ExtResource( 3 )
 
-[node name="Skeleton" parent="RightHandController/RightHand/Hand_R/Armature" index="0"]
-bones/8/bound_children = [ NodePath("IndexBoneAttachment") ]
-
 [node name="mesh_Hand_R" parent="RightHandController/RightHand/Hand_R/Armature/Skeleton" index="0"]
 material_override = ExtResource( 3 )
 
@@ -184,7 +195,7 @@ visible = false
 enabled = false
 
 [node name="AnimationTree" parent="RightHandController/RightHand" index="1"]
-tree_root = SubResource( 26 )
+tree_root = SubResource( 40 )
 
 [node name="MovementTurn" parent="RightHandController" index="2" instance=ExtResource( 13 )]
 turn_mode = 2
@@ -200,6 +211,7 @@ enabled = false
 jump_button_id = 15
 
 [node name="MovementFlight" parent="." index="4" instance=ExtResource( 18 )]
+enabled = false
 flight_button = 14
 
 [node name="MovementWallWalk" parent="." index="5" instance=ExtResource( 17 )]

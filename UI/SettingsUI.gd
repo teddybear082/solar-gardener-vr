@@ -84,3 +84,7 @@ func _on_GraphicsSlider_value_changed(value: float) -> void:
 	Game.planet.trigger_lod(false)
 	Game.main_scene.resolution_scaling_factor = value
 	Game.main_scene.root_viewport_size_changed()
+
+
+func _on_QuitButton_pressed():
+	get_tree().quit()

@@ -34,6 +34,7 @@ anchor_left = 0.02
 anchor_right = 0.98
 anchor_bottom = 1.0
 size_flags_stretch_ratio = 3.36
+custom_constants/separation = 20
 
 [node name="MusicVolumeH" type="HBoxContainer" parent="Panel/VBoxContainer"]
 margin_right = 1228.0
@@ -60,9 +61,9 @@ step = 0.01
 value = 0.8
 
 [node name="SFXVolumeH" type="HBoxContainer" parent="Panel/VBoxContainer"]
-margin_top = 43.0
+margin_top = 59.0
 margin_right = 1228.0
-margin_bottom = 82.0
+margin_bottom = 98.0
 size_flags_stretch_ratio = 3.36
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/SFXVolumeH"]
@@ -84,11 +85,12 @@ step = 0.01
 value = 0.8
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 86.0
+margin_top = 118.0
 margin_right = 1228.0
-margin_bottom = 90.0
+margin_bottom = 122.0
 
 [node name="Sensitivity" type="HBoxContainer" parent="Panel/VBoxContainer"]
+visible = false
 margin_top = 94.0
 margin_right = 1228.0
 margin_bottom = 133.0
@@ -113,9 +115,10 @@ step = 0.01
 value = 0.33
 
 [node name="InvertYAxis" type="HBoxContainer" parent="Panel/VBoxContainer"]
-margin_top = 137.0
+visible = false
+margin_top = 94.0
 margin_right = 1228.0
-margin_bottom = 176.0
+margin_bottom = 133.0
 size_flags_stretch_ratio = 3.36
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/InvertYAxis"]
@@ -156,17 +159,17 @@ custom_fonts/font = ExtResource( 1 )
 text = "save benchmark"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 180.0
+margin_top = 142.0
 margin_right = 1228.0
-margin_bottom = 387.0
+margin_bottom = 285.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.28
 
 [node name="Sensitivity2" type="HBoxContainer" parent="Panel/VBoxContainer"]
-margin_top = 391.0
+margin_top = 305.0
 margin_right = 1228.0
-margin_bottom = 430.0
+margin_bottom = 344.0
 size_flags_stretch_ratio = 4.58
 
 [node name="GraphicsLabel" type="Label" parent="Panel/VBoxContainer/Sensitivity2"]
@@ -226,15 +229,31 @@ text = "Max"
 align = 2
 
 [node name="HSeparator3" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 434.0
+margin_top = 364.0
 margin_right = 1228.0
-margin_bottom = 575.0
+margin_bottom = 461.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.19
 
+[node name="QuitButton" type="Button" parent="Panel/VBoxContainer"]
+margin_top = 481.0
+margin_right = 1228.0
+margin_bottom = 578.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.19
+custom_fonts/font = ExtResource( 1 )
+text = "QUIT"
+
+[node name="HSeparator4" type="HSeparator" parent="Panel/VBoxContainer"]
+margin_top = 598.0
+margin_right = 1228.0
+margin_bottom = 602.0
+
 [node name="DoneButton" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 579.0
+margin_top = 622.0
 margin_right = 1228.0
 margin_bottom = 720.0
 grow_horizontal = 2
@@ -251,4 +270,5 @@ text = "CONTINUE"
 [connection signal="focus_entered" from="Panel/VBoxContainer/BenchmarkContainer/Metadata" to="." method="_on_Metadata_focus_entered"]
 [connection signal="pressed" from="Panel/VBoxContainer/BenchmarkContainer/SaveFPSButton" to="." method="_on_SaveFPSButton_pressed"]
 [connection signal="value_changed" from="Panel/VBoxContainer/Sensitivity2/GraphicsSlider" to="." method="_on_GraphicsSlider_value_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/DoneButton" to="." method="_on_DoneButton_pressed"]

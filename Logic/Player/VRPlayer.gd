@@ -65,7 +65,7 @@ func _ready():
 		$RightHandController.add_child(ui_viewport)
 		
 	if Game.vr_movement_selection == Game.vr_movement_speed.SLOW:
-		set_speed(2)
+		set_speed(1.5)
 		set_turn_sensitivity(1)
 	
 	elif Game.vr_movement_selection == Game.vr_movement_speed.FAST:
@@ -104,7 +104,14 @@ func _ready():
 	tool_select_ui.connect("analyzer_button_pressed", Game.multitool, "_on_analyzer_handUI_button_pressed")
 	tool_select_ui.connect("plant_button_pressed", Game.multitool, "_on_plant_handUI_button_pressed")
 	tool_select_ui.connect("grow_button_pressed", Game.multitool, "_on_grow_handUI_button_pressed")
-
+	
+	movement_disabled = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($ARVRCamera/FadeSphereMesh.get_surface_material(0), "albedo_color", Color(0,0,0,0), 10)
+	yield(get_tree().create_timer(10), "timeout")
+	$ARVRCamera/FadeSphereMesh.visible = false
+	tween.kill()
+	movement_disabled = false
 	
 func _process(delta):
 	pass

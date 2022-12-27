@@ -9,10 +9,21 @@ onready var shed = $Shed
 onready var arvrcamera = $FPController/ARVRCamera
 onready var cooldown = $MenuCoolDown
 var ok_to_select : bool = true
-
+var quit_available : bool = false
 
 func _ready():
 	loading_screen.set_camera(arvrcamera)
+
+func _process(delta):
+	if not quit_available:
+		return
+		
+	if quit_available:
+		if $FPController/LeftHandController.is_button_pressed(XRTools.Buttons.VR_TRIGGER):
+			get_tree().quit()
+			
+		if $FPController/RightHandController.is_button_pressed(XRTools.Buttons.VR_TRIGGER):
+			get_tree().quit()
 
 
 func _on_LoadingScreen_continue_pressed():
@@ -60,9 +71,12 @@ func _on_LeftFunctionPickup_has_picked_up(what):
 	shed.visible = false
 	title_logo.visible = false
 	ARVRServer.center_on_hmd(ARVRServer.DONT_RESET_ROTATION, true)
-	yield(get_tree().create_timer(2), "timeout")
 	Game.vr_hand_selection = Game.vr_primary_hand.LEFT
 	$FPController.set_process_internal(false)
+	$FPController/ARVRCamera/FadeSphereMesh.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($FPController/ARVRCamera/FadeSphereMesh.get_surface_material(0), "albedo_color", Color(0,0,0,255), 1.5)
+	yield(get_tree().create_timer(1.7), "timeout")
 	get_tree().change_scene("res://Logic/MainScene.tscn")
 
 
@@ -73,11 +87,27 @@ func _on_RightFunctionPickup_has_picked_up(what):
 	shed.visible = false
 	title_logo.visible = false
 	ARVRServer.center_on_hmd(ARVRServer.DONT_RESET_ROTATION, true)
-	yield(get_tree().create_timer(2), "timeout")
 	Game.vr_hand_selection = Game.vr_primary_hand.RIGHT
 	$FPController.set_process_internal(false)
+	$FPController/ARVRCamera/FadeSphereMesh.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($FPController/ARVRCamera/FadeSphereMesh.get_surface_material(0), "albedo_color", Color(0,0,0,255), 1.5)
+	yield(get_tree().create_timer(1.7), "timeout")
+	tween.kill()
 	get_tree().change_scene("res://Logic/MainScene.tscn")
 
 
 func _on_MenuCoolDown_timeout():
 	ok_to_select = true
+
+
+func _on_QuitArea_body_entered(body):
+	if body.get_parent().name == "PlayerBody":
+		$Shed/QuitArea/QuitLabel3D.visible = true
+		quit_available = true
+	
+
+func _on_QuitArea_body_exited(body):
+	if body.get_parent().name == "PlayerBody":
+		$Shed/QuitArea/QuitLabel3D.visible = false
+		quit_available = false
