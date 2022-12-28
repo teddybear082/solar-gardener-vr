@@ -208,8 +208,10 @@ func hop_music_fade(old_planet: Planet, new_planet: Planet):
 func execute_planet_hop(new_planet: Planet, pos: Vector3):
 	var sun_hot := false
 	#pos = new_planet.global_translation + new_planet.global_translation.direction_to(player.global_translation) * 10.0 - player.global_transform.basis.y * 2.0
-	var dir_to_planet = player.global_translation.direction_to(new_planet.global_translation)
-	pos = new_planet.global_translation + player.global_translation.direction_to(pos).cross(-dir_to_planet).cross(dir_to_planet).normalized() * 15.0
+	
+	pos = new_planet.global_translation + (new_planet.global_translation.direction_to(player.global_translation) * 12.5)
+#	var dir_to_planet = player.global_translation.direction_to(new_planet.global_translation)
+#	pos = new_planet.global_translation + player.global_translation.direction_to(pos).cross(-dir_to_planet).cross(dir_to_planet).normalized() * 15.0
 	set_game_state(State.WARPING)
 #	if not planet.planet_growth_stage == new_planet.planet_growth_stage \
 #		or new_planet.music_prefix == "obsidian":
