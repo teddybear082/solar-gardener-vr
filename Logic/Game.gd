@@ -307,6 +307,7 @@ func _on_offhand_controller_button_pressed(button):
 				$SettingsOpenCooldown.start(1.4)
 				self.game_state = State.SETTINGS
 			elif game_state == State.SETTINGS:
+				player.set_handmenu_distance(UI.get_node("SettingsUI").handmenu_value)
 				# this is only the correct if you can only enter settings from ingame!!
 				self.game_state = State.INGAME
 	if button == vr_journal_button:

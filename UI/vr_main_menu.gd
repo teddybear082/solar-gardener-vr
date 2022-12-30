@@ -18,7 +18,7 @@ func _process(delta):
 	if not quit_available:
 		return
 		
-	if quit_available:
+	if quit_available and $Shed.visible == true:
 		if $FPController/LeftHandController.is_button_pressed(XRTools.Buttons.VR_TRIGGER):
 			get_tree().quit()
 			

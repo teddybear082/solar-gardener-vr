@@ -89,36 +89,37 @@ margin_top = 118.0
 margin_right = 1228.0
 margin_bottom = 122.0
 
-[node name="Sensitivity" type="HBoxContainer" parent="Panel/VBoxContainer"]
-visible = false
-margin_top = 94.0
+[node name="HandMenuDistance" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 142.0
 margin_right = 1228.0
-margin_bottom = 133.0
+margin_bottom = 223.0
 size_flags_stretch_ratio = 3.36
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/Sensitivity"]
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HandMenuDistance"]
 margin_right = 612.0
-margin_bottom = 39.0
+margin_bottom = 81.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
-text = "Mouse Sensitivity"
+text = "Hand Menus Distance
+(Left:Farthest from Player)"
 valign = 1
 
-[node name="SensitivitySlider" type="HSlider" parent="Panel/VBoxContainer/Sensitivity"]
+[node name="SensitivitySlider" type="HSlider" parent="Panel/VBoxContainer/HandMenuDistance"]
 margin_left = 616.0
 margin_right = 1228.0
-margin_bottom = 39.0
+margin_bottom = 81.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-max_value = 1.0
-step = 0.01
-value = 0.33
+min_value = -0.1
+max_value = 0.3
+step = 0.001
+value = 0.195
 
 [node name="InvertYAxis" type="HBoxContainer" parent="Panel/VBoxContainer"]
 visible = false
-margin_top = 94.0
+margin_top = 243.0
 margin_right = 1228.0
-margin_bottom = 133.0
+margin_bottom = 282.0
 size_flags_stretch_ratio = 3.36
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/InvertYAxis"]
@@ -159,34 +160,35 @@ custom_fonts/font = ExtResource( 1 )
 text = "save benchmark"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 142.0
+margin_top = 243.0
 margin_right = 1228.0
-margin_bottom = 285.0
+margin_bottom = 339.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.28
 
 [node name="Sensitivity2" type="HBoxContainer" parent="Panel/VBoxContainer"]
-margin_top = 305.0
+margin_top = 359.0
 margin_right = 1228.0
-margin_bottom = 344.0
+margin_bottom = 440.0
 size_flags_stretch_ratio = 4.58
 
 [node name="GraphicsLabel" type="Label" parent="Panel/VBoxContainer/Sensitivity2"]
 margin_right = 612.0
-margin_bottom = 39.0
+margin_bottom = 81.0
 hint_tooltip = "Can boost performance especially when playing in high-res window"
 mouse_filter = 1
 size_flags_horizontal = 3
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 1 )
-text = "Graphics (render resolution)"
+text = "Graphics (render resolution)
+(No Change on Quest)"
 valign = 1
 
 [node name="GraphicsSlider" type="HSlider" parent="Panel/VBoxContainer/Sensitivity2"]
 margin_left = 616.0
 margin_right = 1228.0
-margin_bottom = 39.0
+margin_bottom = 81.0
 hint_tooltip = "Can boost performance especially when playing in high-res window"
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -229,17 +231,17 @@ text = "Max"
 align = 2
 
 [node name="HSeparator3" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 364.0
+margin_top = 460.0
 margin_right = 1228.0
-margin_bottom = 461.0
+margin_bottom = 525.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.19
 
 [node name="QuitButton" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 481.0
+margin_top = 545.0
 margin_right = 1228.0
-margin_bottom = 578.0
+margin_bottom = 610.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -248,12 +250,12 @@ custom_fonts/font = ExtResource( 1 )
 text = "QUIT"
 
 [node name="HSeparator4" type="HSeparator" parent="Panel/VBoxContainer"]
-margin_top = 598.0
+margin_top = 630.0
 margin_right = 1228.0
-margin_bottom = 602.0
+margin_bottom = 634.0
 
 [node name="DoneButton" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 622.0
+margin_top = 654.0
 margin_right = 1228.0
 margin_bottom = 720.0
 grow_horizontal = 2
@@ -261,11 +263,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.19
 custom_fonts/font = ExtResource( 1 )
+action_mode = 0
 text = "CONTINUE"
 
 [connection signal="value_changed" from="Panel/VBoxContainer/MusicVolumeH/MusicSlider" to="." method="_on_MusicSlider_value_changed"]
 [connection signal="value_changed" from="Panel/VBoxContainer/SFXVolumeH/SFXSlider" to="." method="_on_SFXSlider_value_changed"]
-[connection signal="value_changed" from="Panel/VBoxContainer/Sensitivity/SensitivitySlider" to="." method="_on_SensitivitySlider_value_changed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/HandMenuDistance/SensitivitySlider" to="." method="_on_SensitivitySlider_value_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/InvertYAxis/InvertYButton" to="." method="_on_InvertYButton_pressed"]
 [connection signal="focus_entered" from="Panel/VBoxContainer/BenchmarkContainer/Metadata" to="." method="_on_Metadata_focus_entered"]
 [connection signal="pressed" from="Panel/VBoxContainer/BenchmarkContainer/SaveFPSButton" to="." method="_on_SaveFPSButton_pressed"]

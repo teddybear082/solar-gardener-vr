@@ -18,9 +18,9 @@ onready var player_body = get_node("PlayerBody")
 onready var pickup_point : Spatial = $"%PickupPoint"
 onready var hand_tool_viewport = $MultitoolHolder/Multitool/HandToolViewport
 onready var tool_select_ui = hand_tool_viewport.get_scene_instance()
-onready var jetpack_light = $JetpackLight
-onready var jetpack_flames = $JetpackFlames
-onready var jetpack_particles = $JetpackFlames/Particles
+onready var jetpack_light = player_body.get_node("KinematicBody/JetpackLight")#$JetpackLight
+onready var jetpack_flames = player_body.get_node("KinematicBody/JetpackFlames")#$JetpackFlames
+onready var jetpack_particles = player_body.get_node("KinematicBody/JetpackFlames/Particles")#$JetpackFlames/Particles
 onready var left_movement_direct = $LeftHandController/MovementDirect
 onready var right_movement_direct = $RightHandController/MovementDirect
 onready var left_movement_jump = $LeftHandController/MovementJump
@@ -65,7 +65,7 @@ func _ready():
 		$RightHandController.add_child(ui_viewport)
 		
 	if Game.vr_movement_selection == Game.vr_movement_speed.SLOW:
-		set_speed(1.5)
+		set_speed(1)
 		set_turn_sensitivity(1)
 	
 	elif Game.vr_movement_selection == Game.vr_movement_speed.FAST:
@@ -229,7 +229,13 @@ func set_turn_sensitivity(turn_number):
 	if turn_number == 1:
 		$LeftHandController/MovementTurn.turn_mode = $LeftHandController/MovementTurn.TurnMode.SNAP
 		$RightHandController/MovementTurn.turn_mode = $RightHandController/MovementTurn.TurnMode.SNAP
-		
+
+func set_handmenu_distance(distance):
+	if $LeftHandController.get_node("UI_Viewport2Dto3D") != null:
+		$LeftHandController/UI_Viewport2Dto3D.transform.origin.z = distance
+	else:
+		$RightHandController.get_node("UI_Viewport2Dto3D").transform.origin.z = distance
+	hand_tool_viewport.transform.origin.z = distance		
 		
 func _on_MovementFlight_flight_started():
 	if not "jetpack" in Audio.playing:

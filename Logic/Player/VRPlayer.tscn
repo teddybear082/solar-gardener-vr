@@ -62,7 +62,7 @@ nodes/OpenHand/node = SubResource( 32 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 33 )
 nodes/Trigger/position = Vector2( -360, 20 )
-node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
+node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
 
 [sub_resource type="AnimationNodeAnimation" id=35]
 animation = "Grip"
@@ -93,7 +93,7 @@ nodes/OpenHand/node = SubResource( 38 )
 nodes/OpenHand/position = Vector2( -600, 100 )
 nodes/Trigger/node = SubResource( 39 )
 nodes/Trigger/position = Vector2( -360, 40 )
-node_connections = [ "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "output", 0, "Grip" ]
+node_connections = [ "Trigger", 0, "OpenHand", "Trigger", 1, "ClosedHand1", "Grip", 0, "Trigger", "Grip", 1, "ClosedHand2", "output", 0, "Grip" ]
 
 [sub_resource type="Resource" id=14]
 script = ExtResource( 19 )
@@ -134,6 +134,10 @@ mesh = SubResource( 27 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 28 )
 
+[node name="PickupPoint" type="Spatial" parent="ARVRCamera" index="3"]
+unique_name_in_owner = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+
 [node name="LeftHandController" parent="." index="2"]
 visible = true
 
@@ -141,6 +145,9 @@ visible = true
 
 [node name="LeftHand" parent="LeftHandController" index="1" instance=ExtResource( 5 )]
 hand_material_override = ExtResource( 3 )
+
+[node name="Skeleton" parent="LeftHandController/LeftHand/Hand_L/Armature" index="0"]
+bones/8/bound_children = [ NodePath("IndexBoneAttachment") ]
 
 [node name="mesh_Hand_L" parent="LeftHandController/LeftHand/Hand_L/Armature/Skeleton" index="0"]
 material_override = ExtResource( 3 )
@@ -157,7 +164,7 @@ enabled = false
 tree_root = SubResource( 34 )
 
 [node name="UI_Viewport2Dto3D" parent="LeftHandController" index="2" instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158014, 0.091311, 0.192568 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016, 0.091, 0.195 )
 screen_size = Vector2( 0.4, 0.3 )
 viewport_size = Vector2( 1980, 1020 )
 unshaded = true
@@ -182,6 +189,9 @@ turn_mode = 2
 
 [node name="RightHand" parent="RightHandController" index="1" instance=ExtResource( 6 )]
 hand_material_override = ExtResource( 3 )
+
+[node name="Skeleton" parent="RightHandController/RightHand/Hand_R/Armature" index="0"]
+bones/8/bound_children = [ NodePath("IndexBoneAttachment") ]
 
 [node name="mesh_Hand_R" parent="RightHandController/RightHand/Hand_R/Armature/Skeleton" index="0"]
 material_override = ExtResource( 3 )
@@ -221,36 +231,7 @@ stick_distance = 30.0
 [node name="PlayerBody" parent="." index="6" instance=ExtResource( 20 )]
 physics = SubResource( 14 )
 
-[node name="PickupPoint" type="Spatial" parent="." index="7"]
-unique_name_in_owner = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04279, 0 )
-
-[node name="MultitoolHolder" type="Spatial" parent="." index="8"]
-
-[node name="Multitool" parent="MultitoolHolder" index="0" instance=ExtResource( 11 )]
-
-[node name="PlayerRayCast" parent="MultitoolHolder/Multitool" index="7" instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 0.926114, -0.377243, 0, 0.377243, 0.926114, 0, 0.122811, -0.289513 )
-cast_to = Vector3( 0, 0, -1 )
-
-[node name="HandToolViewport" parent="MultitoolHolder/Multitool" index="8" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0.2 )
-update_mode = 2
-collision_layer = 688128
-
-[node name="Poke" parent="MultitoolHolder/Multitool" index="9" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737845, -0.155635 )
-radius = 0.01
-
-[node name="BadPlanting" type="Area" parent="." index="9"]
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="BadPlanting" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54036, 0 )
-shape = SubResource( 1 )
-
-[node name="JetpackLight" type="SpotLight" parent="." index="10"]
+[node name="JetpackLight" type="SpotLight" parent="PlayerBody/KinematicBody" index="1"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.378101, -0.497189 )
 visible = false
 light_color = Color( 1, 0.909804, 0.435294, 1 )
@@ -260,9 +241,34 @@ spot_attenuation = 1.86607
 spot_angle = 40.9585
 spot_angle_attenuation = 2.46229
 
-[node name="JetpackFlames" parent="." index="11" instance=ExtResource( 9 )]
+[node name="JetpackFlames" parent="PlayerBody/KinematicBody" index="2" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372514, -0.494825 )
 visible = false
+
+[node name="MultitoolHolder" type="Spatial" parent="." index="7"]
+
+[node name="Multitool" parent="MultitoolHolder" index="0" instance=ExtResource( 11 )]
+
+[node name="PlayerRayCast" parent="MultitoolHolder/Multitool" index="7" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 0.882619, -0.470088, 0, 0.470088, 0.882619, 0, 0.0829531, -0.17078 )
+cast_to = Vector3( 0, 0, -1 )
+
+[node name="HandToolViewport" parent="MultitoolHolder/Multitool" index="8" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0.195 )
+update_mode = 2
+collision_layer = 688128
+
+[node name="Poke" parent="MultitoolHolder/Multitool" index="9" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737845, -0.155635 )
+radius = 0.01
+
+[node name="BadPlanting" type="Area" parent="." index="8"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="BadPlanting" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54036, 0 )
+shape = SubResource( 1 )
 
 [connection signal="flight_finished" from="MovementFlight" to="." method="_on_MovementFlight_flight_finished"]
 [connection signal="flight_started" from="MovementFlight" to="." method="_on_MovementFlight_flight_started"]
@@ -271,3 +277,4 @@ visible = false
 [editable path="LeftHandController/LeftHand/Hand_L"]
 [editable path="RightHandController/RightHand"]
 [editable path="RightHandController/RightHand/Hand_R"]
+[editable path="PlayerBody"]

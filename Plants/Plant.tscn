@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Plants/Plant.gd" type="Script" id=1]
 [ext_resource path="res://Plants/BadPlanting.gd" type="Script" id=2]
@@ -10,6 +10,9 @@ radius = 0.860162
 
 [sub_resource type="SphereShape" id=5]
 radius = 0.998777
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.2
 
 [sub_resource type="SphereShape" id=2]
 radius = 1.39294
@@ -34,6 +37,9 @@ shape = SubResource( 1 )
 transform = Transform( 1.26439, 0, 0, 0, 2.51831, 0, 0, 0, 1.26439, 0, 2.01814, 0 )
 shape = SubResource( 5 )
 disabled = true
+
+[node name="CollisionShape2" type="CollisionShape" parent="Area"]
+shape = SubResource( 6 )
 
 [node name="RemoveTween" type="Tween" parent="."]
 playback_process_mode = 0

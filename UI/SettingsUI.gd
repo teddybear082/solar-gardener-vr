@@ -1,6 +1,6 @@
 extends Control
 
-
+var handmenu_value : float = 0.195
 
 func _ready() -> void:
 	$Panel/VBoxContainer/BenchmarkContainer.visible = OS.is_debug_build() 
@@ -48,9 +48,8 @@ func _on_Metadata_focus_entered() -> void:
 		$"%Metadata".text = ""
 
 func _on_SensitivitySlider_value_changed(value: float) -> void:
-#	Game.player.mouse_sensitivity = (Game.player.min_sensitivity + value * (Game.player.max_sensitivity - Game.player.min_sensitivity))
-	pass
-
+	#Game.player.mouse_sensitivity = (Game.player.min_sensitivity + value * (Game.player.max_sensitivity - Game.player.min_sensitivity))
+	handmenu_value = value
 
 func hide_settings():
 	self.visible = false
@@ -59,6 +58,7 @@ func show_settings():
 	self.visible = true
 
 func _on_DoneButton_pressed():
+	Game.player.set_handmenu_distance(handmenu_value)
 	Game.get_node("SettingsOpenCooldown").start(0.4)
 	Game.game_state = Game.State.INGAME
 
@@ -76,6 +76,9 @@ func _on_InvertYButton_pressed() -> void:
 	pass
 
 func _on_GraphicsSlider_value_changed(value: float) -> void:
+	if OS.get_name().to_lower() == "android":
+		pass
+	
 	value = lerp(.3, 1.0, value)
 	Game.world.get_node("Stars").visible = (value >= .7)
 	for planet in Game.planet_list:
