@@ -135,6 +135,20 @@ Multitool Secondary: Grip"
 font = ExtResource( 13 )
 horizontal_alignment = 0
 
+[node name="slow_move_explainer_label3D" type="Label3D" parent="Shed"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.891393, 2.07122, -2.13548 )
+pixel_size = 0.001
+text = "-----------------
+Choose SLOW
+movement speed 
+for snap turn, 
+slow walk, 
+and disabling 
+planet rotation 
+while on planet
+------------------"
+font = ExtResource( 13 )
+
 [node name="Wall1" type="StaticBody" parent="Shed"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.18095, 1.04289, 1.00529 )
 

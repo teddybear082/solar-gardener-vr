@@ -213,7 +213,7 @@ rect_pivot_offset = Vector2( 576, 15 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 5 )
 text = "Thumbsticks: move and turn
-Multiool Hand: Trigger to activate
+Multitool Hand: Trigger to activate beam
 Use off-hand index finger to
 select tool from multitool wrist menu"
 align = 1
